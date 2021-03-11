@@ -1,0 +1,11 @@
+Tasks
+
+
+
+1. create cards that takes a classroom detail. 
+
+
+2. add validators in login
+
+
+3. 

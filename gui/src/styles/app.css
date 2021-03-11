@@ -1,0 +1,394 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+
+.home {
+  display: flex;
+  background-color: white;
+  width: 100vw;
+  justify-content: center;
+  position: relative;
+  animation: home;
+  animation-duration: 0.5s;
+}
+@keyframes home {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.home__welcome {
+  position: absolute;
+  top: -400px;
+  width: 500px;
+  font-family: "Righteous", cursive;
+  opacity: 0;
+  color: #16c79a;
+  background-color: #19456b;
+  border-radius: 10px;
+  animation-name: welcome;
+  height: 400px;
+  animation-duration: 1.1s;
+  animation-timing-function: ease-out;
+  animation-delay: 0.3s;
+  animation-fill-mode: forwards;
+  text-decoration: none;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+@keyframes welcome {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+  from {
+    top: -400px;
+  }
+  to {
+    top: 10rem;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+.login__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+}
+.login__username > input {
+  font-size: 1.5rem;
+  width: 85%;
+  padding: 10px;
+  margin: 1rem 5%;
+  border: none;
+}
+
+.login__password > input {
+  font-size: 1.5rem;
+  width: 85%;
+  padding: 10px;
+  margin: 1rem 5%;
+  border: none;
+}
+
+.login__button > button {
+  font-size: 1.5rem;
+  width: 90%;
+  padding: 10px;
+  margin: 1rem 5%;
+  border: none;
+  background-color: #16c79a;
+  transition: background-color 0.5s;
+}
+
+.login__button > button:hover {
+  background-color: #1ceeb9;
+  cursor: pointer;
+}
+
+.login__username > input:focus {
+  outline-color: #16a79c;
+}
+.login__password > input:focus {
+  outline-color: #16a79c;
+}
+.links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 40px;
+}
+.musimu {
+  font-family: "Righteous", cursive;
+  font-size: 36px;
+  color: white;
+  padding: 10px;
+}
+.app {
+  min-height: 100vh;
+  display: grid;
+  background-color: white;
+  grid-template-columns: 14% 1fr;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar main"
+    "sidebar main";
+}
+.sidebar {
+  background-color: #19456b;
+  position: relative;
+
+  grid-area: sidebar;
+}
+
+.sidebar__container {
+  position: fixed;
+  background-color: #19456b;
+  left: 0;
+  top: 0;
+}
+.main {
+  grid-area: main;
+}
+
+.header {
+  display: flex;
+  z-index: 1;
+  grid-area: header;
+  position: relative;
+}
+.header__container {
+  align-items: center;
+  background-color: #16c79a;
+  width: 86%;
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+}
+.header__brand {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.header__navbar {
+  justify-content: space-between;
+}
+
+.body {
+  margin-top: 60px;
+
+  background-color: white;
+}
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}
+
+.dashboard__classrooms {
+  width: 95%;
+}
+.dashboard__main {
+  flex: 1;
+}
+
+.dashboard__head {
+  margin: 20px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: rgb(247, 247, 247);
+}
+.dashboard__teacher {
+  display: flex;
+  margin: 0.3rem;
+  align-content: center;
+}
+.teacher__name {
+  align-self: center;
+  margin: 0 10px;
+}
+
+.dashboard__students {
+  padding: 20px;
+}
+
+.head__buttons {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  margin: 20px;
+}
+
+.head__buttons > button {
+  border: 1px solid black;
+  background-color: white;
+  height: 3rem;
+  border-radius: 10px;
+}
+.dashboard__grid {
+  display: grid;
+  width: 100%;
+  padding: 1rem;
+  grid-gap: 0.7rem;
+  grid-template-columns: repeat(4, 1fr);
+}
+.dashboard__card {
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  cursor: pointer;
+  justify-items: center;
+  object-fit: contain;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  transition: opacity 0.5s;
+}
+.dashboard__card:hover {
+  opacity: 80%;
+}
+.card__img > img {
+  border-radius: 15px 15px 0 0;
+  width: 100%;
+}
+.card__detail {
+  margin: 10px;
+}
+
+.dashboard__announcement {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  width: 350px;
+  background-color: white;
+  height: 740px;
+  border-radius: 25px 0 0 0;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.dashboard__students {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 1rem;
+  height: 400px;
+}
+
+.studentlist {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.studentlist > input {
+  margin: 10px 0;
+  font-size: large;
+  height: 2rem;
+}
+.studentlist__students {
+  background-color: white;
+}
+
+.studentlist__student {
+  display: flex;
+  align-content: center;
+  padding: 10px;
+  transition: background-color 0.4s;
+  border-bottom: 1px solid #999999;
+  cursor: pointer;
+}
+
+.studentlist__student:hover {
+  background-color: #16c79a;
+}
+
+.studentlist__student > p {
+  align-self: center;
+  margin: 0 10px;
+}
+
+.dashboard__students-search {
+  border-radius: 10px;
+  background-color: #19456b;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.dashboard__students-profile {
+  border-radius: 10px;
+  background-color: #19456b;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.announcement__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  color: white;
+  background-color: #19456b;
+  border-radius: 25px 0 0 0px;
+}
+
+.announcements {
+  display: flex;
+  flex-direction: column;
+  height: 710px;
+}
+.announcement__details {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+}
+
+.announcement__row {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+.announcement {
+  transition: background-color 0.5s;
+  padding: 0.3rem 0;
+}
+.announcement:hover {
+  background-color: #16c79a;
+}
+.announcement__list {
+  flex: 1;
+}
+.announcement__container {
+  flex: 1;
+}
+.announcement__footer {
+  margin: 0.5rem 1rem;
+}
+
+.announcement__create {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.announcement__fields {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.announcement__fields > input {
+  margin-bottom: 10px;
+}
+
+.announcement__fields > textarea {
+  margin-bottom: 10px;
+}
+
+.announcement__post > button {
+  background-color: #19456b;
+  padding: 15px;
+  color: white;
+  border-radius: 15px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  width: 200px;
+  transition: all 0.5s;
+  transition-property: background-color, width;
+}
+
+.announcement__post > button:hover {
+  background-color: #2a6eaa;
+  width: 465px;
+}
+
+.classroom__create-select {
+  margin: 20px;
+}
