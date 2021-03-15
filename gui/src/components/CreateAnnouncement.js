@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -17,6 +17,7 @@ export default function EditClassroom() {
   const [open, setOpen] = React.useState(false);
   const { token, userId } = useSelector((state) => state.auth);
   const update = useSelector((state) => state.update.isUpdated);
+
   const [name, setName] = React.useState("");
   const [content, setContent] = React.useState("");
   const dispatch = useDispatch();
@@ -29,13 +30,10 @@ export default function EditClassroom() {
     formData.append("classroom_id", 2);
     formData.append("author_id", userId);
     dispatch(createAnnouncement(token, formData));
+    dispatch(getAnnouncementList(token));
     dispatch(toggle(!update));
     setOpen(false);
   };
-
-  useEffect(() => {
-    dispatch(getAnnouncementList(token));
-  }, [update, token]);
 
   const handleContent = (e) => {
     setContent(e.target.value);

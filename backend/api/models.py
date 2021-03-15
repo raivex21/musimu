@@ -17,6 +17,21 @@ class Schoolyear(models.Model):
     def __str__(self):
         return str(self.start_year) + "-" + str(self.end_year)
 
+class Quiz(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=255)
+    created = models.DateTimeField(default=timezone.now)
+    teacher = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    level = models.ForeignKey(Level, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Quizzes"
+    def __str__(self):
+        return f'{self.name} by {self.teacher.username}'
+
+
+
+
 
 class Classroom(models.Model):
     name = models.CharField(max_length=20)
@@ -28,10 +43,20 @@ class Classroom(models.Model):
     isActive = models.BooleanField(default=True)
     students = models.ManyToManyField(User, through='Enrollment')
     cover = models.ForeignKey('api.Cover', on_delete=models.SET_NULL, blank=True, null=True)
+    quizzes = models.ManyToManyField(Quiz, through='ClassroomQuizList')
 
 
     def __str__(self):
         return self.name
+
+
+class ClassroomQuizList(models.Model):
+    classroom_id = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    quiz_id = models.ForeignKey('api.Quiz', on_delete=models.CASCADE)
+    date_added = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.quiz_id.name} => {self.classroom_id.name}'
 
 
 class Announcement(models.Model):
@@ -80,3 +105,48 @@ class Module(models.Model):
     def __str__(self):
         return self.name
 
+class Choice(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    date_added = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.name
+
+
+
+class Question(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="questions")
+    question = models.CharField(max_length=765)
+    answer = models.ForeignKey(Choice, on_delete=models.CASCADE, related_name="answer")
+    date_added = models.DateTimeField(default=timezone.now)
+    choices = models.ManyToManyField(Choice)
+
+    def __str__(self):
+        return self.question
+
+class Messages(models.Model):
+    sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name="receiver", on_delete=models.CASCADE)
+    message = models.TextField()
+    sent_date = models.DateTimeField(default=timezone.now)
+    read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.sender.first_name} {self.sender.last_name}=====>{self.receiver.first_name} {self.receiver.last_name}'
+    
+    class Meta:
+        verbose_name_plural = "Messages"
+
+class GradedQuiz(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    grade = models.FloatField()
+    score = models.IntegerField()
+    total = models.IntegerField()
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_taken = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.quiz.name
+
+    class Meta:
+        verbose_name_plural = "Graded Quizzes"

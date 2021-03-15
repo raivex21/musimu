@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAnnouncementList } from "../features/announcementSlice";
 import Announcement from "./Announcement";
 import Pagination from "@material-ui/lab/Pagination";
-import { toggle } from "../features/updateSlice";
 
 const announcementCount = 10;
 

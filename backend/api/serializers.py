@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from operator import itemgetter
+
 from api.models import (
     Announcement,
     Level,
@@ -7,7 +9,13 @@ from api.models import (
     Announcement,
     Enrollment,
     Cover,
-    Module
+    Module,
+    Quiz,
+    Choice,
+    Question,
+    Messages,
+    GradedQuiz,
+    ClassroomQuizList
 
 )
 from users.serializers import UserSerializer
@@ -192,3 +200,52 @@ class ModuleSerializer(serializers.ModelSerializer):
         ).data
         uploader_name = serializer_data.get("full_name")
         return uploader_name
+
+class QuizSerializer(serializers.ModelSerializer):
+    level_name = serializers.SerializerMethodField()
+    teacher_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Quiz
+        fields = ("__all__")
+    def get_level_name(self, obj):
+        serializer_data = LevelSerializer(
+            obj.level
+        ).data
+        level_name = serializer_data.get("name")
+        return level_name
+    def get_teacher_name(self, obj):
+        serializer_data = UserProfileSerializer(
+            obj.teacher
+        ).data
+        teacher_name = serializer_data.get("full_name")
+        return teacher_name
+    
+
+class QuestionSerializer(serializers.ModelSerializer):
+    choices_name = serializers.SerializerMethodField()
+    answer_name = serializers.SerializerMethodField()
+
+    class Meta: 
+        model = Question
+        fields = ("__all__")
+    
+    def get_choices_name(self, obj):
+        serializer_data = ChoiceSerializer(
+            obj.choices, many=True
+        ).data
+        res = list(map(itemgetter('name'), serializer_data))
+        choices_name = res
+        return choices_name
+    
+    def get_answer_name(self, obj):
+        serializer_data = ChoiceSerializer(
+            obj.answer
+        ).data
+        answer_name = serializer_data.get("name")
+        return answer_name
+
+class ChoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Choice
+        fields = ("__all__")

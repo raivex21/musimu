@@ -8,7 +8,10 @@ from api.views import (
     EnrollmentViewSet,
     CoverViewSet,
     ModuleViewSet,
-    PrivateUserProfileViewSet
+    PrivateUserProfileViewSet,
+    QuizViewSet,
+    QuestionViewSet,
+    ChoiceViewSet
 )
 
 router = DefaultRouter()
@@ -21,4 +24,8 @@ router.register(r'enrollments', EnrollmentViewSet, basename="enrollments")
 router.register(r'covers', CoverViewSet, basename='covers')
 router.register(r'modules', ModuleViewSet, basename='module')
 router.register(r'self', PrivateUserProfileViewSet, basename='self')
+router.register(r'quizzes', QuizViewSet, basename='quizzes')
+router.register(r'questions', QuestionViewSet, basename='questions')
+router.register(r'choices', ChoiceViewSet, basename="choices")
+
 urlpatterns = router.urls

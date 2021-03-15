@@ -6,7 +6,13 @@ from api.models import (
     Announcement,
     Enrollment,
     Cover,
-    Module
+    Module,
+    Quiz,
+    ClassroomQuizList,
+    Choice,
+    Messages,
+    Question,
+    GradedQuiz
 )
 
 admin.site.register(Level)
@@ -16,3 +22,9 @@ admin.site.register(Announcement)
 admin.site.register(Enrollment)
 admin.site.register(Cover)
 admin.site.register(Module)
+admin.site.register(Quiz)
+admin.site.register(ClassroomQuizList)
+admin.site.register(Messages)
+admin.site.register(Choice),
+admin.site.register(Question)
+admin.site.register(GradedQuiz)

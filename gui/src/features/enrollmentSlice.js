@@ -118,7 +118,7 @@ export const createEnrollment = (token, formData) => {
         dispatch(createEnrollmentSuccess());
       })
       .catch((err) => {
-        dispatch(createEnrollmentFail(err.message));
+        dispatch(createEnrollmentFail(err));
       });
   };
 };

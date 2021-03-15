@@ -114,7 +114,7 @@
 .app {
   min-height: 100vh;
   display: grid;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   grid-template-columns: 14% 1fr;
   grid-template-rows: 60px 1fr;
   grid-template-areas:
@@ -273,7 +273,14 @@
   margin: 10px 0;
   font-size: large;
   height: 2rem;
+  border: none;
+  border-bottom: 1px solid black;
 }
+
+.studentlist > input:focus {
+  outline: 1px solid rgb(223, 221, 221);
+}
+
 .studentlist__students {
   background-color: white;
 }
@@ -298,9 +305,12 @@
 
 .dashboard__students-search {
   border-radius: 10px;
-  background-color: #19456b;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  overflow-y: scroll;
 }
+
 .dashboard__students-profile {
   border-radius: 10px;
   background-color: #19456b;
@@ -391,4 +401,12 @@
 
 .classroom__create-select {
   margin: 20px;
+}
+
+.classroom__detail {
+  margin: 1rem;
+}
+
+.classroom__name {
+  margin: 0.3rem 0;
 }

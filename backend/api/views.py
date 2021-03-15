@@ -8,7 +8,13 @@ from api.models import (
     Enrollment,
     Classroom,
     Cover,
-    Module
+    Module,
+    Quiz,
+    Choice,
+    Question,
+    Messages,
+    GradedQuiz,
+    ClassroomQuizList
 )
 from api.serializers import (
     AnnouncementSerializer,
@@ -19,7 +25,10 @@ from api.serializers import (
     UserProfileSerializer,
     CoverSerializer,
     ModuleSerializer,
-    PrivateUserProfileSerializer
+    PrivateUserProfileSerializer,
+    QuizSerializer,
+    QuestionSerializer,
+    ChoiceSerializer
 )
 
 from users.models import User
@@ -68,3 +77,15 @@ class PrivateUserProfileViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return User.objects.filter(username=self.request.user.username)
     http_method_names = ['get','put']
+
+class QuizViewSet(viewsets.ModelViewSet):
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+
+class ChoiceViewSet(viewsets.ModelViewSet):
+    queryset = Choice.objects.all()
+    serializer_class = ChoiceSerializer
