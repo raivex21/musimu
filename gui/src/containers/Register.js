@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { authLogin } from "../features/authSlice";
+import { authSignup } from "../features/authSlice";
 import { navigate, A } from "hookrouter";
 import { useDispatch, useSelector } from "react-redux";
+import { Typography } from "@material-ui/core";
+
 function Register() {
   const error = useSelector((state) => state.auth.error);
   const dispatch = useDispatch();
@@ -14,7 +16,16 @@ function Register() {
 
   const register = (e) => {
     e.preventDefault();
-    dispatch(authLogin(username, password1));
+    const formData = {
+      username: username,
+      password1: password1,
+      password2: password2,
+      email: email,
+      first_name: firstName,
+      last_name: lastName,
+      is_teacher: false,
+    };
+    dispatch(authSignup(formData, username));
     if (error !== null || (username !== null && password1 !== null)) {
       navigate("/");
     }
@@ -45,30 +56,55 @@ function Register() {
     <div className="home">
       <div className="home__welcome">
         <form>
-          <div className="">
-            <input onChange={(e) => onUsernameChange(e)} />
+          <div className="home__register">
+            <div className="register__title">
+              <Typography variant="h6">Register</Typography>
+            </div>
+
+            <div className="register__field">
+              <input onChange={onUsernameChange} placeholder="Username" />
+            </div>
+            <div className="register__field">
+              <input onChange={(e) => onEmailChange(e)} placeholder="Email" />
+            </div>
+            <div className="register__field">
+              <input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => onPassword1Change(e)}
+              />
+            </div>
+            <div className="register__field">
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                onChange={(e) => onPassword2Change(e)}
+              />
+            </div>
+            <div className="register__field">
+              <input
+                onChange={(e) => onFirstNameChange(e)}
+                placeholder="First Name"
+              />
+            </div>
+            <div className="register__field">
+              <input
+                onChange={(e) => onLastNameChange(e)}
+                placeholder="Last Name"
+              />
+            </div>
+            <div className="register__field">
+              <button onClick={register}>Register</button>
+            </div>
+            <div className="link__container">
+              <A className="link" href="/">
+                Home
+              </A>
+              <A className="link" href="/login">
+                Login
+              </A>
+            </div>
           </div>
-          <div className="">
-            <input onChange={(e) => onEmailChange(e)} />
-          </div>
-          <div className="">
-            <input type="password" onChange={(e) => onPassword1Change(e)} />
-          </div>
-          <div className="">
-            <input type="password" onChange={(e) => onPassword2Change(e)} />
-          </div>
-          <div className="">
-            <input onChange={(e) => onFirstNameChange(e)} />
-          </div>
-          <div className="">
-            <input onChange={(e) => onLastNameChange(e)} />
-          </div>
-          <div className="">
-            <button onClick={register}>Register</button>
-          </div>
-          <A className="link" href="/">
-            Home
-          </A>
         </form>
       </div>
     </div>

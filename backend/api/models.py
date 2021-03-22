@@ -70,6 +70,9 @@ class Announcement(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['-date_posted']
+
 class Enrollment(models.Model):
     student_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enrolled')
     classroom_id = models.ForeignKey(Classroom, on_delete=models.CASCADE, related_name='enrolled_classrooms')
@@ -150,3 +153,43 @@ class GradedQuiz(models.Model):
 
     class Meta:
         verbose_name_plural = "Graded Quizzes"
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    def __str__(self):
+        return self.name
+
+class SubCategory(models.Model):
+    name = models.CharField(max_length=255)
+    cat = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class Task(models.Model):
+    name = models.CharField(max_length=255)
+    cat = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    sub_cat = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class Condtion(models.Model):
+    name = models.CharField(max_length=255)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+
+
+
+# class Task(models.Model):
+#     name = models.CharField(max_length=255)
+#     condition = models.ForeignKey(Category, on_delete=models.CASCADE)
+#     created = models.DateTimeField(default=timezone.now)
+
+#     def __str__(self):
+#         return self.name

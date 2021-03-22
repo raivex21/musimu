@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
+import SidebarMenu from "../components/Sidebar";
 
 function CustomLayout(props) {
   return (
@@ -7,7 +8,9 @@ function CustomLayout(props) {
       {props.isAuth ? (
         <div className="app">
           <aside className="sidebar">
-            <div className="sidebar__container">sidesidesidesideside</div>
+            <div className="sidebar__container">
+              <SidebarMenu />
+            </div>
           </aside>
           <div className="header">
             <Header />

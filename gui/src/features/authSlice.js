@@ -67,7 +67,7 @@ export const authLogin = (username, password) => {
   return (dispatch) => {
     dispatch(authStart());
     axios
-      .post("http://127.0.0.1:8000/rest-auth/login/", {
+      .post(process.env.REACT_APP_AXIOS_URL + "/rest-auth/login/", {
         username: username,
         password: password,
       })
@@ -90,6 +90,37 @@ export const authLogin = (username, password) => {
       })
       .catch((err) => {
         authFail(err.message);
+      });
+  };
+};
+
+export const authSignup = (formData, username) => {
+  return (dispatch) => {
+    dispatch(authStart());
+    axios
+      .post(
+        process.env.REACT_APP_AXIOS_URL + "/rest_auth/registration/",
+        formData
+      )
+      .then((res) => {
+        const user = {
+          token: res.data.key,
+          username,
+          last_name: res.data.user_detail.last_name,
+          first_name: res.data.user_detail.first_name,
+          userId: res.data.user_detail.userId,
+          is_teacher: res.data.user_detail.is_teacher,
+          avatar: res.data.user_detail.avatar,
+          expirationDate: new Date(new Date().getTime() + 86400 * 1000),
+        };
+
+        localStorage.setItem("user", JSON.stringify(user));
+        console.log(res.data);
+        dispatch(authSuccess(res.data));
+        dispatch(checkAuthTimeout(86400));
+      })
+      .catch((err) => {
+        dispatch(authFail(err));
       });
   };
 };
@@ -131,7 +162,7 @@ export const getUserList = (token) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .get("http://127.0.0.1:8000/users/all/")
+      .get(process.env.REACT_APP_AXIOS_URL + "/users/all/")
       .then((res) => {
         console.log(res.data);
         dispatch(getUserListSuccess(res.data));

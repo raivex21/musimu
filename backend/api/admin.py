@@ -12,7 +12,11 @@ from api.models import (
     Choice,
     Messages,
     Question,
-    GradedQuiz
+    GradedQuiz,
+    Task,
+    Category,
+    SubCategory,
+    Condtion
 )
 
 admin.site.register(Level)
@@ -28,3 +32,7 @@ admin.site.register(Messages)
 admin.site.register(Choice),
 admin.site.register(Question)
 admin.site.register(GradedQuiz)
+admin.site.register(Condtion)
+admin.site.register(Task)
+admin.site.register(SubCategory)
+admin.site.register(Category)

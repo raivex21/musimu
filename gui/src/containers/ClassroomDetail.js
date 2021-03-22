@@ -18,7 +18,7 @@ function ClassroomDetail(props) {
     dispatch(getClassroom(token, props.id));
     dispatch(getEnrollmentDetail(token, props.id));
     // eslint-disable-next-line
-  }, []);
+  }, [token, dispatch, props.id]);
 
   return (
     <div className="">

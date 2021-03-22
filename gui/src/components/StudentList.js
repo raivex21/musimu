@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserList } from "../features/userSlice";
 
-function StudentList() {
+function StudentList(props) {
   const dispatch = useDispatch();
   const [student, setStudent] = React.useState("");
   const [veiwStudent, setViewStudent] = React.useState(null);
@@ -14,11 +14,11 @@ function StudentList() {
   useEffect(() => {
     dispatch(getUserList(token));
     // eslint-disable-next-line
-  }, []);
+  }, [dispatch, token]);
 
-  console.log(student);
+  const students = users.filter((d) => d.is_teacher === false);
+
   console.log(users);
-  console.log(veiwStudent);
   return (
     <div className="studentlist">
       <input
@@ -26,7 +26,7 @@ function StudentList() {
         onChange={(e) => setStudent(e.target.value)}
       />
       <div className="studentlist__students">
-        {users
+        {students
           .filter((user) => {
             if (student === "") {
               return user;
@@ -40,7 +40,7 @@ function StudentList() {
           })
           .map((u, index) => (
             <div
-              onClick={() => setViewStudent(u.id)}
+              onClick={() => props.onSelectStudent(u.id)}
               className="studentlist__student"
               key={index}
             >

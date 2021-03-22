@@ -106,7 +106,7 @@ export const getClassroomList = (token, id) => {
   };
 };
 
-export const createClassroom = (token, formData) => {
+export const createClassroom = (token, formData, id) => {
   return (dispatch) => {
     dispatch(createClassroomStart());
     axios.defaults.headers = {
@@ -119,6 +119,7 @@ export const createClassroom = (token, formData) => {
         console.log("successfully added classroom");
         console.log(res.data);
         dispatch(createClassroomSuccess());
+        dispatch(getClassroomList(token, id));
       })
       .catch((err) => {
         dispatch(createClassroomFail(err.message));

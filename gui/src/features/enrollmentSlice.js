@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getClassroom } from "./classroomSlice";
 
 export const enrollmentsSlice = createSlice({
   name: "enrollments",
@@ -12,10 +13,12 @@ export const enrollmentsSlice = createSlice({
   reducers: {
     getEnrollmentsStart: (state) => {
       state.loading = true;
+      state.error = null;
     },
     getEnrollmentsSuccess: (state, action) => {
       state.enrollments = action.payload;
       state.loading = false;
+      state.error = null;
     },
     getEnrollmentsFail: (state, action) => {
       state.error = action.payload;
@@ -23,10 +26,12 @@ export const enrollmentsSlice = createSlice({
     },
     getEnrollmentDetailStart: (state) => {
       state.loading = true;
+      state.error = null;
     },
     getEnrollmentDetailSuccess: (state, action) => {
       state.enrollment = action.payload;
       state.loading = false;
+      state.error = null;
     },
     getEnrollmentDetailFail: (state, action) => {
       state.error = action.payload;
@@ -103,7 +108,7 @@ export const getEnrollmentDetail = (token, id) => {
   };
 };
 
-export const createEnrollment = (token, formData) => {
+export const createEnrollment = (token, formData, id) => {
   return (dispatch) => {
     dispatch(createEnrollmentStart());
     console.log("starting createEnrollment");
@@ -116,6 +121,8 @@ export const createEnrollment = (token, formData) => {
       .then((res) => {
         console.log(res.data);
         dispatch(createEnrollmentSuccess());
+        dispatch(getEnrollments(token));
+        dispatch(getClassroom(token, id));
       })
       .catch((err) => {
         dispatch(createEnrollmentFail(err));

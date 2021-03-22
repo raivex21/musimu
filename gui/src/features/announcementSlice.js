@@ -78,6 +78,7 @@ export const createAnnouncement = (token, formData) => {
       .then((res) => {
         console.log(res.data);
         dispatch(createAnnouncementSuccess(res.data));
+        dispatch(getAnnouncementList(token));
       })
       .catch((err) => {
         console.log(err.message);

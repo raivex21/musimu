@@ -8,7 +8,6 @@ import "../styles/app.css";
 
 function EnrollmentsList() {
   const classrooms = useSelector((state) => state.classroom.classrooms);
-  const update = useSelector((state) => state.update.isUpdated);
   const { userId, token } = useSelector((state) => state.auth);
   console.log(classrooms);
   const dispatch = useDispatch();
@@ -17,7 +16,7 @@ function EnrollmentsList() {
     dispatch(getClassroomList(token, userId));
 
     // eslint-disable-next-line
-  }, [update, token, userId]);
+  }, [token, userId]);
 
   return (
     <>

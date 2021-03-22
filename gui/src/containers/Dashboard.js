@@ -25,29 +25,31 @@ function Dashboard() {
               <h3>{`${first_name} ${last_name}`}</h3>
             </div>
           </div>
-          <div className="head__buttons">
-            <CreateClassroom />
-            <EditClassroom />
+          {is_teacher && (
+            <div className="head__buttons">
+              <CreateClassroom />
+              <EditClassroom />
 
-            <CreateAnnouncement />
-          </div>
+              <CreateAnnouncement />
+            </div>
+          )}
         </div>
         <div className="dashboard__classrooms">
           {is_teacher ? <ClassroomList /> : <EnrollmentsList />}
         </div>
-        <div className="dashboard__students">
+        {/* <div className="dashboard__students">
           <div className="dashboard__students-search">
             <StudentList />
           </div>
 
           <div className="dashboard__students-profile">profile</div>
-        </div>
+        </div> */}
       </div>
 
       <div className="dashboard__announcement">
         <div className="announcement__header">Announcements</div>
 
-        <AnnouncementList />
+        <AnnouncementList global={true} inClassroom={false} />
       </div>
     </div>
   );

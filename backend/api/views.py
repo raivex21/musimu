@@ -14,7 +14,8 @@ from api.models import (
     Question,
     Messages,
     GradedQuiz,
-    ClassroomQuizList
+    ClassroomQuizList,
+    # Task
 )
 from api.serializers import (
     AnnouncementSerializer,
@@ -28,7 +29,11 @@ from api.serializers import (
     PrivateUserProfileSerializer,
     QuizSerializer,
     QuestionSerializer,
-    ChoiceSerializer
+    ChoiceSerializer,
+    GradedQuizSerializer,
+    ClassroomQuizListSerializer,
+    MessageSerializer,
+    # TaskSerializer
 )
 
 from users.models import User
@@ -89,3 +94,21 @@ class QuestionViewSet(viewsets.ModelViewSet):
 class ChoiceViewSet(viewsets.ModelViewSet):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
+
+class GradedQuizViewSet(viewsets.ModelViewSet):
+    queryset = GradedQuiz.objects.all()
+    serializer_class = GradedQuizSerializer
+
+class ClassroomQuizListViewSet(viewsets.ModelViewSet):
+    queryset = ClassroomQuizList.objects.all()
+    serializer_class = ClassroomQuizListSerializer
+
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Messages.objects.all()
+    serializer_class = MessageSerializer
+
+
+
+# # class TaskViewSet(viewsets.ModelViewSet):
+#     queryset = Task.objects.all()
+#     serializer_class = TaskSerializer

@@ -7,8 +7,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useSelector, useDispatch } from "react-redux";
+import { navigate } from "hookrouter";
 
-import { toggle } from "../features/updateSlice";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -20,7 +20,7 @@ import {
 } from "../features/schoolSlice";
 import { createClassroom } from "../features/classroomSlice";
 
-export default function CreateClassroom() {
+export default function EditClassroom() {
   const [open, setOpen] = useState(false);
 
   const [name, setName] = useState("");
@@ -36,13 +36,12 @@ export default function CreateClassroom() {
     (state) => state.auth
   );
   const classrooms = useSelector((state) => state.classroom.classrooms);
-  const update = useSelector((state) => state.update.isUpdated);
 
   useEffect(() => {
     dispatch(getSchoolYear(token));
     dispatch(getGradeLevel(token));
     dispatch(getCover(token));
-  }, [token, update, classrooms]);
+  }, [token, classrooms]);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -83,7 +82,8 @@ export default function CreateClassroom() {
     formData.append("isActive", true);
     dispatch(createClassroom(token, formData));
     console.log(formData);
-    dispatch(toggle(!update));
+    // dispatch(toggle(!update));
+    navigate("/");
     setOpen(false);
   };
 

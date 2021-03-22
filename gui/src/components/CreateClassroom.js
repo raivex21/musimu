@@ -8,7 +8,6 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useSelector, useDispatch } from "react-redux";
 
-import { toggle } from "../features/updateSlice";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -26,23 +25,21 @@ export default function CreateClassroom() {
   const [name, setName] = useState("");
   const [schedule, setSchedule] = useState("");
   const dispatch = useDispatch();
-  const [cover, setCover] = useState(null);
-  const [year, setYear] = useState(null);
-  const [gradeLevel, setGradeLevel] = useState(null);
+  const [cover, setCover] = useState("");
+  const [year, setYear] = useState("");
+  const [gradeLevel, setGradeLevel] = useState("");
   const schoolYear = useSelector((state) => state.school.schoolYear);
   const covers = useSelector((state) => state.school.cover);
   const level = useSelector((state) => state.school.gradeLevel);
   const { token, first_name, last_name, userId } = useSelector(
     (state) => state.auth
   );
-  const classrooms = useSelector((state) => state.classroom.classrooms);
-  const update = useSelector((state) => state.update.isUpdated);
 
   useEffect(() => {
     dispatch(getSchoolYear(token));
     dispatch(getGradeLevel(token));
     dispatch(getCover(token));
-  }, [token, update, classrooms]);
+  }, [token, dispatch]);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -81,9 +78,7 @@ export default function CreateClassroom() {
     formData.append("school_year_id", year);
     formData.append("cover", cover);
     formData.append("isActive", true);
-    dispatch(createClassroom(token, formData));
-    console.log(formData);
-    dispatch(toggle(!update));
+    dispatch(createClassroom(token, formData, userId));
     setOpen(false);
   };
 

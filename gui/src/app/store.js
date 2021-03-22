@@ -6,7 +6,10 @@ import classroomReducer from "../features/classroomSlice";
 import enrollmentsSlice from "../features/enrollmentSlice";
 import userSlice from "../features/userSlice";
 import schoolSlice from "../features/schoolSlice";
-import updateSlice from "../features/updateSlice";
+import moduleSlice from "../features/moduleSlice";
+import quizSlice from "../features/quizSlice";
+import gradeSlice from "../features/gradeSlice";
+import messageSlice from "../features/messageSlice";
 
 export default configureStore({
   reducer: {
@@ -16,6 +19,9 @@ export default configureStore({
     enrollments: enrollmentsSlice,
     user: userSlice,
     school: schoolSlice,
-    update: updateSlice,
+    modules: moduleSlice,
+    quiz: quizSlice,
+    grades: gradeSlice,
+    message: messageSlice,
   },
 });

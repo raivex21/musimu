@@ -15,7 +15,8 @@ from api.models import (
     Question,
     Messages,
     GradedQuiz,
-    ClassroomQuizList
+    ClassroomQuizList,
+    # Task
 
 )
 from users.serializers import UserSerializer
@@ -27,7 +28,8 @@ class StringSerializer(serializers.StringRelatedField):
         return value
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    full_name = serializers.SerializerMethodField()    
+    full_name = serializers.SerializerMethodField()
+    
 
     class Meta:
         model = User
@@ -44,17 +46,19 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "last_login", 
             "avatar", 
             "date_joined",
-             "full_name"
+            "full_name",
             )
     def get_full_name(self, obj):
         
         full_name = f'{obj.first_name} {obj.last_name}'
         return full_name
 
+    
+
 #create another userprofile serializer that will be private and only the current user can access
 
 class PrivateUserProfileSerializer(serializers.ModelSerializer):
-    full_name = serializers.SerializerMethodField()    
+    full_name = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -94,6 +98,8 @@ class ClassroomSerializer(serializers.ModelSerializer):
     level_name = serializers.SerializerMethodField()
     school_year_name = serializers.SerializerMethodField()
     cover_url = serializers.SerializerMethodField()
+    students = serializers.SerializerMethodField()
+
 
 
     class Meta:
@@ -130,6 +136,13 @@ class ClassroomSerializer(serializers.ModelSerializer):
         ).data
         cover_url = serializer_data.get('image')
         return cover_url
+    
+    def get_students(self, obj):
+        serializer_data = UserProfileSerializer(
+            obj.students, many=True
+        ).data
+        students = serializer_data
+        return students
 
 class AnnouncementSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField()
@@ -204,6 +217,7 @@ class ModuleSerializer(serializers.ModelSerializer):
 class QuizSerializer(serializers.ModelSerializer):
     level_name = serializers.SerializerMethodField()
     teacher_name = serializers.SerializerMethodField()
+    questions = serializers.SerializerMethodField()
 
     class Meta:
         model = Quiz
@@ -220,23 +234,31 @@ class QuizSerializer(serializers.ModelSerializer):
         ).data
         teacher_name = serializer_data.get("full_name")
         return teacher_name
+
+    def get_questions(self, obj):
+        questions = QuestionSerializer(obj.questions.all(), many=True).data
+        return questions
     
 
 class QuestionSerializer(serializers.ModelSerializer):
-    choices_name = serializers.SerializerMethodField()
+    choices_data = serializers.SerializerMethodField()
     answer_name = serializers.SerializerMethodField()
 
     class Meta: 
         model = Question
         fields = ("__all__")
     
-    def get_choices_name(self, obj):
+    def get_choices_data(self, obj):
+        # serializer_data = ChoiceSerializer(
+        #     obj.choices, many=True
+        # ).data
+        # res = list(map(itemgetter('name'), serializer_data))
+        # choices_name = res
         serializer_data = ChoiceSerializer(
             obj.choices, many=True
         ).data
-        res = list(map(itemgetter('name'), serializer_data))
-        choices_name = res
-        return choices_name
+        choices_data = serializer_data
+        return choices_data
     
     def get_answer_name(self, obj):
         serializer_data = ChoiceSerializer(
@@ -249,3 +271,57 @@ class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
         fields = ("__all__")
+
+class GradedQuizSerializer(serializers.ModelSerializer):
+    quiz_name = serializers.SerializerMethodField()
+    student_name = serializers.SerializerMethodField()
+    class Meta:
+        model = GradedQuiz
+        fields = ("__all__")
+
+    def get_quiz_name(self, obj):
+        serializer_data = QuizSerializer(
+            obj.quiz
+        ).data
+        return serializer_data.get('name')
+    
+    def get_student_name(self, obj):
+        serializer_data = UserProfileSerializer(
+            obj.student
+        ).data
+        student_name = serializer_data.get("full_name")
+        return student_name
+
+class ClassroomQuizListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClassroomQuizList
+        fields = ("__all__")
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    sender_name = serializers.SerializerMethodField()
+    receiver_name = serializers.SerializerMethodField()
+
+
+    class Meta:
+        model = Messages
+        fields = ("__all__")
+
+    def get_sender_name(self, obj):
+        serializer_data = UserProfileSerializer(
+            obj.sender
+        ).data
+        sender_name = serializer_data.get("full_name")
+        return sender_name
+
+    def get_receiver_name(self, obj):
+        serializer_data = UserProfileSerializer(
+            obj.receiver
+        ).data
+        receiver_name = serializer_data.get("full_name")
+        return receiver_name
+
+# class TaskSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Task
+#         fields = ("__all__")
