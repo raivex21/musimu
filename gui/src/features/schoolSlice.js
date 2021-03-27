@@ -72,7 +72,7 @@ export const getGradeLevel = (token) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .get("http://127.0.0.1:8000/api/levels/")
+      .get(process.env.REACT_APP_AXIOS_URL + "/api/levels/")
       .then((res) => {
         console.log("getting classrooms success");
         console.log(res.data);
@@ -92,7 +92,7 @@ export const getSchoolYear = (token) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .get("http://127.0.0.1:8000/api/schoolyears/")
+      .get(process.env.REACT_APP_AXIOS_URL + "/api/schoolyears/")
       .then((res) => {
         console.log("getting classrooms success");
         console.log(res.data);
@@ -112,7 +112,7 @@ export const getCover = (token) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .get("http://127.0.0.1:8000/api/covers/")
+      .get(process.env.REACT_APP_AXIOS_URL + "/api/covers/")
       .then((res) => {
         console.log("getting cover success");
         console.log(res.data);

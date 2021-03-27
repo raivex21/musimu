@@ -71,7 +71,7 @@ export const getClassroom = (token, id) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .get(`http://127.0.0.1:8000/api/classrooms/${id}`)
+      .get(`${process.env.REACT_APP_AXIOS_URL}/api/classrooms/${id}`)
       .then((res) => {
         console.log("getting classrooms success");
         console.log(res.data);
@@ -91,7 +91,7 @@ export const getClassroomList = (token, id) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .get("http://127.0.0.1:8000/api/classrooms/")
+      .get(process.env.REACT_APP_AXIOS_URL + "/api/classrooms/")
       .then((res) => {
         console.log("getting classrooms successful");
         console.log(res.data);
@@ -114,7 +114,7 @@ export const createClassroom = (token, formData, id) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .post("http://127.0.0.1:8000/api/classrooms/", formData)
+      .post(process.env.REACT_APP_AXIOS_URL + "/api/classrooms/", formData)
       .then((res) => {
         console.log("successfully added classroom");
         console.log(res.data);

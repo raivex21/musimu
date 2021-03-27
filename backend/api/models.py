@@ -171,6 +171,7 @@ class Task(models.Model):
     name = models.CharField(max_length=255)
     cat = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     sub_cat = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, blank=True)
+    grade_level = models.ForeignKey(Level, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -182,14 +183,35 @@ class Condtion(models.Model):
     def __str__(self):
         return self.name
 
+class Board(models.Model):
+    classroom = models.OneToOneField(Classroom, on_delete=models.CASCADE, primary_key=True)
+    
+    def __str__(self):
+        return f'{self.classroom.name}-board'
+
+class BoardMessages(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now)
+    message = models.TextField()
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name="board_message")
+
+    def __str__(self):
+        return f'{self.user} to {self.board} on {self.timestamp}'
 
 
+class Convo(models.Model):
+    user1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user1")
+    user2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user2")
+    date_created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.user1.username} and {self.user2.username}'
 
-# class Task(models.Model):
-#     name = models.CharField(max_length=255)
-#     condition = models.ForeignKey(Category, on_delete=models.CASCADE)
-#     created = models.DateTimeField(default=timezone.now)
+class ConvoMessage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    convo = models.ForeignKey(Convo, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
-#     def __str__(self):
-#         return self.name
+    def __str__(self):
+        return f'{self.user} to {self.convo} on {self.timestamp}'

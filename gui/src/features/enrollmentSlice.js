@@ -73,7 +73,7 @@ export const getEnrollments = (token, id) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .get(`http://127.0.0.1:8000/api/enrollments`)
+      .get(`${process.env.REACT_APP_AXIOS_URL}/api/enrollments`)
       .then((res) => {
         // CHECK IF THE ENROLLMENT IS FOR CURRENT STUDENT AND IF IT IS ACTIVE
         const enrollments = res.data.filter(
@@ -97,7 +97,7 @@ export const getEnrollmentDetail = (token, id) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .get(`http://127.0.0.1:8000/api/enrollments/${id}`)
+      .get(`${process.env.REACT_APP_AXIOS_URL}/api/enrollments/${id}`)
       .then((res) => {
         console.log(res.data);
         dispatch(getEnrollmentDetailSuccess(res.data));
@@ -117,7 +117,7 @@ export const createEnrollment = (token, formData, id) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .post("http://127.0.0.1:8000/api/enrollments/", formData)
+      .post(process.env.REACT_APP_AXIOS_URL + "/api/enrollments/", formData)
       .then((res) => {
         console.log(res.data);
         dispatch(createEnrollmentSuccess());

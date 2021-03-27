@@ -16,7 +16,7 @@ import { Typography } from "@material-ui/core";
 
 export default function SidebarMenu() {
   const [selectedIndex, setSelectedIndex] = React.useState("");
-  const userId = useSelector((state) => state.auth.userId);
+  const { is_teacher, userId } = useSelector((state) => state.auth);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -52,22 +52,24 @@ export default function SidebarMenu() {
             }
           />
         </ListItem>
-        <ListItem
-          button
-          selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
-        >
-          <ListItemIcon>
-            <AssignmentOutlinedIcon color="secondary" />
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography type="body2" style={{ color: "#16c79a" }}>
-                Quizzes
-              </Typography>
-            }
-          />
-        </ListItem>
+        {is_teacher === false ? null : (
+          <ListItem
+            button
+            selected={selectedIndex === 1}
+            onClick={(event) => handleListItemClick(event, 1)}
+          >
+            <ListItemIcon>
+              <AssignmentOutlinedIcon color="secondary" />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography type="body2" style={{ color: "#16c79a" }}>
+                  Quizzes
+                </Typography>
+              }
+            />
+          </ListItem>
+        )}
         <ListItem
           button
           selected={selectedIndex === 2}

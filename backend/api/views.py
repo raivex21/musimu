@@ -1,5 +1,5 @@
 #from django.shortcuts import render
-
+from django_filters import rest_framework as filters
 # Create your views here.
 from api.models import (
     Announcement,
@@ -15,7 +15,14 @@ from api.models import (
     Messages,
     GradedQuiz,
     ClassroomQuizList,
-    # Task
+    Task,
+    Condtion,
+    SubCategory,
+    Category,
+    Board,
+    BoardMessages,
+    Convo,
+    ConvoMessage
 )
 from api.serializers import (
     AnnouncementSerializer,
@@ -33,12 +40,21 @@ from api.serializers import (
     GradedQuizSerializer,
     ClassroomQuizListSerializer,
     MessageSerializer,
-    # TaskSerializer
+    TaskSerializer,
+    ConditionSerializer,
+    SubCategorySerializer,
+    CategorySerializer,
+    BoardMessagesSerializer,
+    BoardSerializer,
+    ConvoSerializer,
+    ConvoMessageSerializer
+
 )
 
 from users.models import User
+from rest_framework.views import APIView
+from rest_framework import viewsets, permissions, generics
 
-from rest_framework import viewsets, permissions
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -109,6 +125,40 @@ class MessageViewSet(viewsets.ModelViewSet):
 
 
 
-# # class TaskViewSet(viewsets.ModelViewSet):
-#     queryset = Task.objects.all()
-#     serializer_class = TaskSerializer
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    filter_backends = [filters.DjangoFilterBackend]
+    filter_fields = ('sub_cat__name', 'cat__name', 'name', 'grade_level')
+
+
+class ConditionViewSet(viewsets.ModelViewSet):
+    queryset = Condtion.objects.all()
+    serializer_class = ConditionSerializer
+
+# class CategoryViewSet(viewsets.ModelViewSet):
+#     queryset = Category.objects.all()
+#     serializer_class = CategorySerializer
+
+# class SubCategoryViewSet(viewsets.ModelViewSet):
+#     queryset = SubCategory.objects.all()
+#     serializer_class = SubCategorySerializer
+
+class BoardViewSet(viewsets.ModelViewSet):
+    queryset = Board.objects.all()
+    serializer_class = BoardSerializer
+
+class BoardMessagesViewSet(viewsets.ModelViewSet):
+    queryset = BoardMessages.objects.all()
+    serializer_class = BoardMessagesSerializer
+
+class ConvoViewSet(viewsets.ModelViewSet):
+    queryset = Convo.objects.all()
+    serializer_class = ConvoSerializer
+    filter_backends = [filters.DjangoFilterBackend]
+    filter_fields = ('user1', 'user2')
+
+class ConvoMessageViewSet(viewsets.ModelViewSet):
+    queryset = ConvoMessage.objects.all()
+    serializer_class = ConvoMessageSerializer
+

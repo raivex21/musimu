@@ -4,7 +4,7 @@ import { getAnnouncementList } from "../features/announcementSlice";
 import Announcement from "./Announcement";
 import Pagination from "@material-ui/lab/Pagination";
 
-const announcementCount = 10;
+const announcementCount = 8;
 
 function AnnouncementList(props) {
   const dispatch = useDispatch();
@@ -47,6 +47,7 @@ function AnnouncementList(props) {
                 content={item.content}
                 avatar={item.avatar}
                 key={item.id}
+                date_posted={item.date_posted}
               />
             );
           })}

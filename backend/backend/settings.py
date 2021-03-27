@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'api',
     "allauth.socialaccount",
+    "django_filters",
     ####
     'allauth.socialaccount.providers.facebook',
 ]
@@ -90,7 +91,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
        'rest_framework.authentication.TokenAuthentication',
    ),
-   'DATETIME_FORMAT': "%m/%d/%Y",
+    'DATETIME_FORMAT': "%x",
 }
 
 CORS_ORIGIN_WHITELIST = [

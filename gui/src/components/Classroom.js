@@ -14,6 +14,7 @@ import AnnouncementList from "./AnnouncementList";
 import GradedQuiz from "./Quiz/GradedQuiz";
 import EnrolledStudentsTable from "../components/EnrolledStudentsTable";
 import { useSelector } from "react-redux";
+import MessageBoard from "./MessageBoard";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -85,6 +86,7 @@ export default function Classroom({ classroom }) {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
+          <MessageBoard id={classroom?.id} />
           <div className="enrollments__tab">
             <EnrollStudent
               id={classroom?.id}
@@ -114,7 +116,7 @@ export default function Classroom({ classroom }) {
           <AnnouncementList
             global={false}
             inClassroom={true}
-            id={classroom.id}
+            id={classroom?.id}
           />
         </TabPanel>
       </div>

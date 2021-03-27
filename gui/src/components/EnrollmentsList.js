@@ -23,7 +23,7 @@ function EnrollmentsList() {
           enrollments.map((enrollment) => (
             <div
               key={enrollment.id}
-              className="dashboard__card-container"
+              className="dashboard__card"
               onClick={() => navigate(`/classroom/${enrollment.id}`)}
             >
               <Card

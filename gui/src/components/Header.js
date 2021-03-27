@@ -32,12 +32,12 @@ function Header(props) {
         <IconButton>
           <NotificationsActiveIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => navigate("/inbox")}>
           <MailIcon />
         </IconButton>
         <CreateMessage />
         <IconButton onClick={handleLogout}>
-          <Avatar src={`http://localhost:8000${avatar}`} />
+          <Avatar src={`${process.env.REACT_APP_AXIOS_URL}${avatar}`} />
         </IconButton>
       </div>
     </div>

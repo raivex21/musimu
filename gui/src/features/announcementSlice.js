@@ -16,6 +16,7 @@ export const announcementSlice = createSlice({
     getAnnouncementListSuccess: (state, action) => {
       state.announcements = action.payload;
       state.error = null;
+      state.loading = false;
     },
     getAnnouncementListFail: (state, action) => {
       state.error = action.payload;
@@ -30,6 +31,7 @@ export const announcementSlice = createSlice({
     },
     createAnnouncementFail: (state, action) => {
       state.error = action.payload;
+      state.loading = false;
     },
   },
 });
@@ -52,7 +54,7 @@ export const getAnnouncementList = (token) => {
     };
 
     axios
-      .get("http://127.0.0.1:8000/api/announcements/")
+      .get(process.env.REACT_APP_AXIOS_URL + "/api/announcements/")
       .then((res) => {
         console.log(res.data);
         // const announcements = res.data.filter((c) => c.id === id);
@@ -74,7 +76,7 @@ export const createAnnouncement = (token, formData) => {
     };
 
     axios
-      .post("http://127.0.0.1:8000/api/announcements/", formData)
+      .post(process.env.REACT_APP_AXIOS_URL + "/api/announcements/", formData)
       .then((res) => {
         console.log(res.data);
         dispatch(createAnnouncementSuccess(res.data));

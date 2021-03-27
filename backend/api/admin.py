@@ -16,7 +16,11 @@ from api.models import (
     Task,
     Category,
     SubCategory,
-    Condtion
+    Condtion,
+    Board,
+    BoardMessages,
+    Convo,
+    ConvoMessage
 )
 
 admin.site.register(Level)
@@ -36,3 +40,7 @@ admin.site.register(Condtion)
 admin.site.register(Task)
 admin.site.register(SubCategory)
 admin.site.register(Category)
+admin.site.register(Board)
+admin.site.register(BoardMessages)
+admin.site.register(Convo)
+admin.site.register(ConvoMessage)

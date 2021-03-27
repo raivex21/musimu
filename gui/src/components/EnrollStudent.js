@@ -1,3 +1,4 @@
+import { Typography } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createEnrollment } from "../features/enrollmentSlice";
@@ -20,18 +21,15 @@ function EnrollStudent(props) {
   console.log(props.students);
   return (
     <div className="enroll">
+      <Typography variant="h6">Enroll</Typography>
       <div className="enroll__card">
         <img src={userDetail.avatar}></img>
         <div className="enroll__details">
-          <p>{userDetail.full_name}</p>
-          <p>{userDetail.email}</p>
-          <p>{userDetail.bio}</p>
+          <Typography variant="subtitle2">{userDetail.full_name}</Typography>
+          <Typography variant="subtitle2">{userDetail.email}</Typography>
+          <Typography variant="subtitle2">{userDetail.bio}</Typography>
         </div>
-        {is_teacher && (
-          <button onClick={submitEnroll}>
-            Enroll Student to this classroom
-          </button>
-        )}
+        {is_teacher && <button onClick={submitEnroll}>Enroll Student</button>}
       </div>
     </div>
   );

@@ -371,6 +371,7 @@
 
 .studentlist__students {
   background-color: white;
+  overflow-y: scroll;
 }
 
 .studentlist__student {
@@ -500,6 +501,10 @@
 }
 .enrollments__tab {
   display: flex;
+  background-color: white;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
 }
 
 .enrollments__studentlist {
@@ -509,15 +514,18 @@
   display: flex;
   height: 400px;
   flex-direction: column;
-  background-color: #2a6eaa;
+  background-color: #041829;
   color: white;
   padding: 0.3rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
 }
 
 .enroll__card > img {
   height: 200px;
   width: 300px;
   object-fit: cover;
+  object-position: 80% 20%;
   margin: 0.3rem;
 }
 
@@ -530,15 +538,15 @@
   border: none;
   height: 3rem;
   cursor: pointer;
-  background-color: #2f74b1;
+  background-color: #0e8fff;
   font-weight: 500;
   color: white;
   transition: background-color 0.5s;
-  border-radius: 50px;
+  border-radius: 5px;
 }
 
 .enroll__card > button:hover {
-  background-color: #7fa6c7;
+  background-color: #01569b;
 }
 
 .modules {
@@ -802,9 +810,19 @@ a:hover {
 
 .inbox__senders {
   width: 20%;
-  background-color: #1ceeb9;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
+  border-right: 1px solid rgb(114, 114, 114);
+  overflow-y: scroll;
+}
+
+.inbox__senders-head {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  background-color: #383838;
+  color: white;
 }
 
 .inbox__content {
@@ -816,22 +834,208 @@ a:hover {
 
 .inbox__head {
   height: 10%;
-  background-color: azure;
+  background-color: #19456b;
+  display: flex;
+  color: white;
+  align-items: center;
+  padding: 0 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .inbox__body {
-  height: 80%;
-  background-color: blueviolet;
+  background: linear-gradient(
+    180deg,
+    rgba(77, 188, 250, 1) 0%,
+    rgba(26, 201, 158, 1) 100%
+  );
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 
 .inbox__newMessage {
-  height: 10%;
-  background-color: rgb(190, 114, 14);
+  border-top: 1px solid rgb(133, 133, 133);
+  height: 70px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
 }
+
+.inbox__newMessage > input {
+  flex: 1;
+  border: none;
+  padding: 0px 20px;
+  font-size: large;
+}
+.inbox__newMessage > input:focus {
+  outline: none;
+}
+
+.inbox__newMessage > button {
+  width: 10%;
+  border: none;
+  border-radius: 10px;
+  margin: 5px;
+}
+.inbox__newMessage > button:hover {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
 .teacher__container {
   padding: 3rem;
 }
 
 .MuiListItemIcon-root > svg {
   color: #16c79a;
+}
+
+.messageBoard {
+  height: 470px;
+  width: 100%;
+  background-color: #16c79a;
+  margin-bottom: 1rem;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.messageBoard__header {
+  height: 10%;
+  display: flex;
+  align-items: center;
+  background-color: rgb(228, 228, 228);
+  padding: 5px 15px 0 15px;
+  border-radius: 15px 15px 0 0;
+}
+
+.messageBoard__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    180deg,
+    rgba(77, 188, 250, 1) 0%,
+    rgba(26, 201, 158, 1) 100%
+  );
+  overflow-y: scroll;
+}
+.messageBoard__send {
+  height: 10%;
+  background-color: white;
+  border-radius: 0 0 15px 15px;
+}
+
+.messageBoard__message {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.messageBoard__sender {
+  display: flex;
+  flex-direction: column;
+  margin: 0 15px;
+  background-color: white;
+  padding: 5px 30px;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.messageBoard__send {
+  display: flex;
+  border-radius: 0 0 15px 15px;
+  padding: 10px;
+}
+.messageBoard__send > input {
+  width: 90%;
+  margin: 5px;
+  border: none;
+  padding: 10px;
+}
+.messageBoard__send > button {
+  width: 10%;
+  height: 50px;
+  border: none;
+  border-radius: 15px;
+  align-self: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.messageBoard__send > button:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  cursor: pointer;
+}
+
+.messageBoard__send > input:focus {
+  outline: 1px solid rgb(212, 212, 212);
+}
+
+.messageBoard__send > button:focus {
+  background: linear-gradient(
+    180deg,
+    rgba(77, 188, 250, 1) 0%,
+    rgba(26, 201, 158, 1) 100%
+  );
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  outline: none;
+  color: white;
+}
+
+.convo__partner {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  padding: 1rem;
+  transition: background-color 0.3s;
+}
+
+.convo__partner:hover {
+  background-color: rgb(192, 189, 189);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.convo__partner:active {
+  background-color: #16c79a;
+  color: white;
+}
+
+.selected-item {
+  background-color: #16c79a;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  z-index: 1;
+}
+
+.selected-item:hover {
+  background-color: #16c79a;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.inbox__message {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.inbox__message > svg {
+  filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.4));
+}
+
+.self {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.inbox__message-text {
+  background-color: #c9c9c9;
+  padding: 1rem;
+  border-radius: 25px;
+  margin: 0 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

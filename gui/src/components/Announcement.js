@@ -1,4 +1,4 @@
-import { Avatar } from "@material-ui/core";
+import { Avatar, Typography } from "@material-ui/core";
 import React from "react";
 
 const Announcement = (props) => {
@@ -10,10 +10,9 @@ const Announcement = (props) => {
           <div className="announcement__title">
             <h5>{props.title}</h5>
           </div>
+          <Typography variant="caption">{props.date_posted}</Typography>
           <div className="announcement__content">
-            <p>
-              <small>{props.content}</small>
-            </p>
+            <Typography variant="body2">{props.content}</Typography>
           </div>
         </div>
       </div>

@@ -10,6 +10,8 @@ import moduleSlice from "../features/moduleSlice";
 import quizSlice from "../features/quizSlice";
 import gradeSlice from "../features/gradeSlice";
 import messageSlice from "../features/messageSlice";
+import boardSlice from "../features/boardSlice";
+import convoSlice from "../features/convoSlice";
 
 export default configureStore({
   reducer: {
@@ -23,5 +25,7 @@ export default configureStore({
     quiz: quizSlice,
     grades: gradeSlice,
     message: messageSlice,
+    board: boardSlice,
+    convo: convoSlice,
   },
 });

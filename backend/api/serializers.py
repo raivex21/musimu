@@ -16,7 +16,14 @@ from api.models import (
     Messages,
     GradedQuiz,
     ClassroomQuizList,
-    # Task
+    Category,
+    SubCategory,
+    Task,
+    Condtion,
+    Board,
+    BoardMessages,
+    Convo,
+    ConvoMessage
 
 )
 from users.serializers import UserSerializer
@@ -321,7 +328,123 @@ class MessageSerializer(serializers.ModelSerializer):
         receiver_name = serializer_data.get("full_name")
         return receiver_name
 
-# class TaskSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Task
-#         fields = ("__all__")
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    tasks = serializers.SerializerMethodField()
+    class Meta:
+        model = Category
+        fields = ("id", "name", "tasks")
+    def get_tasks(self, obj):
+        serializer_data = TaskSerializer(obj.task_set.all(), many=True).data
+        tasks = serializer_data
+        return tasks
+
+class SubCategorySerializer(serializers.ModelSerializer):
+    
+
+
+    class Meta:
+        model = SubCategory
+        fields = ("__all__")
+
+class TaskSerializer(serializers.ModelSerializer):
+    conditions = serializers.SerializerMethodField()
+    # category_name = serializers.SerializerMethodField()
+    subcat_name = serializers.SerializerMethodField()
+    class Meta:
+        model = Task
+        fields = ("__all__")
+    
+    def get_conditions(self, obj):
+        serializer_data = ConditionSerializer(obj.condtion_set.all(), many=True).data
+        return serializer_data
+
+    def get_subcat_name(self, obj):
+        serializer_data = SubCategorySerializer(
+            obj.sub_cat
+        ).data
+        subcat_name = serializer_data.get("name")
+        return subcat_name
+
+class ConditionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Condtion
+        fields = ("__all__")
+
+class BoardSerializer(serializers.ModelSerializer):
+    messages = serializers.SerializerMethodField()
+    classroom_name = serializers.SerializerMethodField()
+    class Meta:
+        model = Board
+        fields = ("__all__")
+
+    def get_messages(self, obj):
+        serializer_data = BoardMessagesSerializer(obj.board_message.all(), many=True).data
+        return serializer_data
+    
+    def get_classroom_name(self, obj):
+        data = ClassroomSerializer(obj.classroom).data
+        return data.get("name")
+
+class BoardMessagesSerializer(serializers.ModelSerializer):
+    user_name = serializers.SerializerMethodField()
+    avatar = serializers.SerializerMethodField()
+
+
+    class Meta:
+        model = BoardMessages
+        fields = ("__all__")
+
+    def get_user_name(self, obj):
+        data = UserProfileSerializer(obj.user).data
+        return data.get("full_name")
+    def get_avatar(self, obj):
+        data = UserProfileSerializer(obj.user).data
+        return data.get("avatar")
+
+class ConvoSerializer(serializers.ModelSerializer):
+    users = serializers.SerializerMethodField()
+    messages = serializers.SerializerMethodField()
+    user1_name = serializers.SerializerMethodField()
+    user2_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Convo
+        fields = ("__all__")
+
+
+    def get_users(self, obj):
+        users = []
+        users.append(obj.user1.id)
+        users.append(obj.user2.id)
+        return users
+    def get_messages(self, obj):
+        data = ConvoMessageSerializer(
+            obj.convomessage_set.all(), many=True
+        ).data
+        return data
+    def get_user1_name(self, obj):
+        data = UserProfileSerializer(
+            obj.user1
+        ).data
+        return data.get("full_name")
+    def get_user2_name(self, obj):
+        data = UserProfileSerializer(
+            obj.user2
+        ).data
+        return data.get("full_name")
+
+class ConvoMessageSerializer(serializers.ModelSerializer):
+    user_name = serializers.SerializerMethodField()
+    avatar = serializers.SerializerMethodField()
+    class Meta:
+        model = ConvoMessage
+        fields = ("__all__")
+
+    def get_user_name(self, obj):
+        data = UserProfileSerializer(obj.user).data
+        return data.get('full_name')
+    def get_avatar(self, obj):
+        data = UserProfileSerializer(obj.user).data
+        return data.get("avatar")
