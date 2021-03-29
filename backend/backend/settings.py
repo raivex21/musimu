@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "django_filters",
     ####
-    'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.facebook',
 ]
 
 SITE_ID = 1
