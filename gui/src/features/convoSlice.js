@@ -5,7 +5,7 @@ export const convoSlice = createSlice({
   name: "convo",
   initialState: {
     convos: [],
-    currentConvo: {},
+    convoDetail: {},
     loading: false,
     error: null,
   },
@@ -47,6 +47,19 @@ export const convoSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    getConvoDetailStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    getConvoDetailSuccess: (state, action) => {
+      state.convoDetail = action.payload;
+      state.loading = false;
+      state.error = null;
+    },
+    getConvoDetailFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -60,6 +73,9 @@ export const {
   createConvoMessageSuccess,
   createConvoMessageFail,
   createConvoMessageStart,
+  getConvoDetailFail,
+  getConvoDetailStart,
+  getConvoDetailSuccess,
 } = convoSlice.actions;
 
 export const getConvoList = (token, userId) => {
@@ -86,7 +102,7 @@ export const getConvoList = (token, userId) => {
   };
 };
 
-export const createConvo = (token, formData) => {
+export const createConvo = (token, formData, userId) => {
   return (dispatch) => {
     dispatch(createConvoStart());
     axios.defaults.headers = {
@@ -99,7 +115,7 @@ export const createConvo = (token, formData) => {
       .then((res) => {
         console.log(res.data);
         dispatch(createConvoSuccess(res.data));
-        dispatch(getConvoList(token));
+        dispatch(getConvoList(token, userId));
       })
       .catch((err) => {
         console.log(err.message);
@@ -126,6 +142,27 @@ export const createConvoMessage = (token, formData, userId) => {
       .catch((err) => {
         console.log(err.message);
         dispatch(createConvoMessageFail(err.message));
+      });
+  };
+};
+
+export const getConvoDetail = (token, id) => {
+  return (dispatch) => {
+    dispatch(getConvoDetailStart());
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    };
+
+    axios
+      .get(`${process.env.REACT_APP_AXIOS_URL}/api/convos/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(getConvoDetailSuccess(res.data));
+      })
+      .catch((err) => {
+        console.log(err.message);
+        dispatch(getConvoDetailFail(err.message));
       });
   };
 };

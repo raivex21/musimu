@@ -119,7 +119,7 @@ function Module() {
             })
             .map((item) => {
               return (
-                <div className="module__item">
+                <div key={item.id} className="module__item">
                   <div className="module__name">
                     <ListItemAvatar>
                       <Avatar>

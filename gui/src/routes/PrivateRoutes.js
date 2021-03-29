@@ -8,6 +8,7 @@ import Profile from "../containers/Profile";
 import Simulator from "../simulator/Simulator";
 import Teachers from "../components/Teachers";
 import Inbox from "../containers/Inbox";
+import CreateTask from "../containers/CreateTask";
 
 const PrivateRoutes = {
   "/": () => <Dashboard />,
@@ -19,6 +20,7 @@ const PrivateRoutes = {
   "/profile/:id": ({ id }) => <Profile id={id} />,
   "/teachers": () => <Teachers />,
   "/inbox": () => <Inbox />,
+  "/task": () => <CreateTask />,
 
   "*": () => <div>Error 404. Page Not Found.</div>,
 };

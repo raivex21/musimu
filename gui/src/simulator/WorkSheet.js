@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Task from "./Task";
-import { connect } from "react-redux";
 
 class WorkSheet extends Component {
   constructor(props) {
@@ -18,6 +17,7 @@ class WorkSheet extends Component {
       keySigList: false,
 
       iSBool: false,
+      aaa: 0,
     };
   }
 
@@ -162,13 +162,14 @@ class WorkSheet extends Component {
       );
     });
     return (
-      <div className="tasks__panel">
+      <div className="tool__tasks">
         <div>
           <label>Choose a Task for:</label>
           <select onChange={this.handleChangeTask}>
-            {/* {task.map(item => (
-              <option value={item.id}>item.name</option>
-            ))} */}
+            <option></option>
+            <option value="clef">Clef</option>
+            <option value="time Signature">Time Signature</option>
+            <option value="key Signature">Key Signature</option>
           </select>
           <button onClick={this.handleTaskSelect}>Select</button>
         </div>{" "}
@@ -257,12 +258,4 @@ class WorkSheet extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(WorkSheet);
+export default WorkSheet;

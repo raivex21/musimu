@@ -136,13 +136,13 @@ class ConditionViewSet(viewsets.ModelViewSet):
     queryset = Condtion.objects.all()
     serializer_class = ConditionSerializer
 
-# class CategoryViewSet(viewsets.ModelViewSet):
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-# class SubCategoryViewSet(viewsets.ModelViewSet):
-#     queryset = SubCategory.objects.all()
-#     serializer_class = SubCategorySerializer
+class SubCategoryViewSet(viewsets.ModelViewSet):
+    queryset = SubCategory.objects.all()
+    serializer_class = SubCategorySerializer
 
 class BoardViewSet(viewsets.ModelViewSet):
     queryset = Board.objects.all()

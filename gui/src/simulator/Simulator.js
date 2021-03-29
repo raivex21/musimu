@@ -4,12 +4,13 @@ import WorkSheet from "./WorkSheet";
 import ConsWarn from "./Console";
 import "./Simulator.css";
 
-class Simulator extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       note: 0,
+      rest: false,
       // buttonBoolSMD: true,
       buttonBoolSMD: false,
 
@@ -43,17 +44,24 @@ class Simulator extends Component {
       tempo: 120,
       volume: 100,
       playIcon: true,
+      metronome: false,
       pauseIcon: false,
       consWarn: [{ start: true, warns: 0 }],
 
       workSheet: false,
+      task: [],
     };
     this.viewOptionOn = this.viewOptionOn.bind(this);
     this.viewOptionOff = this.viewOptionOff.bind(this);
   }
-  toWorkSheet = (clef, up, down, keySig) => {
-    console.log(clef, up, down, keySig);
+  // toWorkSheet = (clef, up, down, keySig) => {
+  // console.log(clef,  up, down, keySig)
+  // }
+
+  toWorkSheet = () => {
+    console.log("aaa");
   };
+
   consoleWarningTS = (
     type,
     measure,
@@ -462,11 +470,82 @@ class Simulator extends Component {
     });
   }
 
+  Metronome() {
+    console.log("metronome");
+    let met = null;
+    if (this.state.metronome === false) {
+      met = true;
+    } else {
+      met = false;
+    }
+    this.setState({ metronome: met });
+    console.log(this.state.metronome);
+  }
   volume(event) {
     this.setState({
       volume: parseInt(event.target.value),
     });
   }
+
+  componentDidMount() {
+    document.onkeydown = this.onKeyDown;
+  }
+
+  onKeyDown = (e) => {
+    e = e || window.event;
+    // switch (e.keyCode) {
+    //   case 81:
+    //     document.getElementById("wholeNote").click();
+    //     break;
+    //   case 87:
+    //     document.getElementById("halfNote").click();
+    //     break;
+    //   case 69:
+    //     document.getElementById("quarterNote").click();
+    //     break;
+    //   case 82:
+    //     document.getElementById("eightNote").click();
+    //     break;
+
+    //   case 89:
+    //     document.getElementById("wholeNoteRest").click();
+    //     break;
+    //   case 85:
+    //     document.getElementById("halfNoteRest").click();
+    //     break;
+    //   case 73:
+    //     document.getElementById("quarterNoteRest").click();
+    //     break;
+    //   case 79:
+    //     document.getElementById("eightNoteRest").click();
+    //     break;
+
+    //   case 83:
+    //     document.getElementById("select").click();
+    //     break;
+
+    //   case 90:
+    //     document.getElementById("flat").click();
+    //     break;
+    //   case 88:
+    //     document.getElementById("sharp").click();
+    //     break;
+    //   case 67:
+    //     document.getElementById("natural").click();
+    //     break;
+    //   case 66:
+    //     document.getElementById("barLine").click();
+    //     break;
+    //   case 32:
+    //     document.getElementById("startPauseSwitch").click();
+    //     break;
+    //   case 77:
+    //     document.getElementById("clockStop").click();
+    //     break;
+
+    //   default:
+    // }
+  };
 
   render() {
     let consWarn = this.state.consWarn.map((consWarn, index) => {
@@ -484,7 +563,6 @@ class Simulator extends Component {
     return (
       <div className="canvas">
         {/* ----------------------------------- Tools & Measurements----------------------------------- */}
-
         <div className="tool">
           <div className="container">
             <p className="container-header">Tools</p>
@@ -499,6 +577,7 @@ class Simulator extends Component {
                 <input
                   type="radio"
                   name="tools"
+                  id="select"
                   onClick={() =>
                     this.setState({ note: 0, buttonBoolSMD: false, handle: 0 })
                   }
@@ -507,45 +586,140 @@ class Simulator extends Component {
                 Select
               </div>
               <div className="box-devider">
+                Notes
                 <input
                   type="radio"
                   name="tools"
+                  id="wholeNote"
                   onClick={() =>
-                    this.setState({ note: 1, buttonBoolSMD: true, handle: 1 })
+                    this.setState({
+                      note: 1,
+                      buttonBoolSMD: true,
+                      handle: 1,
+                      rest: false,
+                    })
                   }
                 />
                 Whole
                 <input
                   type="radio"
                   name="tools"
+                  id="halfNote"
                   onClick={() =>
-                    this.setState({ note: 2, buttonBoolSMD: true, handle: 1 })
+                    this.setState({
+                      note: 2,
+                      buttonBoolSMD: true,
+                      handle: 1,
+                      rest: false,
+                    })
                   }
                 />
                 Half
                 <input
                   type="radio"
                   name="tools"
+                  id="quarterNote"
                   onClick={() =>
-                    this.setState({ note: 4, buttonBoolSMD: true, handle: 1 })
+                    this.setState({
+                      note: 4,
+                      buttonBoolSMD: true,
+                      handle: 1,
+                      rest: false,
+                    })
                   }
                 />
                 Quarter
+                <input
+                  type="radio"
+                  name="tools"
+                  id="eightNote"
+                  onClick={() =>
+                    this.setState({
+                      note: 8,
+                      buttonBoolSMD: true,
+                      handle: 1,
+                      rest: false,
+                    })
+                  }
+                />
+                eight
               </div>
+              <div className="box-devider">
+                Rests
+                <input
+                  type="radio"
+                  name="tools"
+                  id="wholeNoteRest"
+                  onClick={() =>
+                    this.setState({
+                      note: 1,
+                      buttonBoolSMD: true,
+                      handle: 1,
+                      rest: true,
+                    })
+                  }
+                />
+                Whole
+                <input
+                  type="radio"
+                  name="tools"
+                  id="halfNoteRest"
+                  onClick={() =>
+                    this.setState({
+                      note: 2,
+                      buttonBoolSMD: true,
+                      handle: 1,
+                      rest: true,
+                    })
+                  }
+                />
+                Half
+                <input
+                  type="radio"
+                  name="tools"
+                  id="quarterNoteRest"
+                  onClick={() =>
+                    this.setState({
+                      note: 4,
+                      buttonBoolSMD: true,
+                      handle: 1,
+                      rest: true,
+                    })
+                  }
+                />
+                Quarter
+                <input
+                  type="radio"
+                  name="tools"
+                  id="eightNoteRest"
+                  onClick={() =>
+                    this.setState({
+                      note: 8,
+                      buttonBoolSMD: true,
+                      handle: 1,
+                      rest: true,
+                    })
+                  }
+                />
+                eight
+              </div>
+
               <div className="box-devider">
                 <input
                   type="radio"
                   name="accidental"
+                  id="natural"
                   defaultChecked="checked"
                 />
                 n
-                <input type="radio" name="accidental" />b
-                <input type="radio" name="accidental" />#
+                <input type="radio" name="accidental" id="flat" />b
+                <input type="radio" name="accidental" id="sharp" />#
               </div>
               <div className="box-devider">
                 <input
                   type="radio"
                   name="tools"
+                  id="barLine"
                   onClick={() =>
                     this.setState({ buttonBoolSMD: true, note: 0, handle: 2 })
                   }
@@ -553,8 +727,7 @@ class Simulator extends Component {
                 Bar line
               </div>
               <div className="box-devider">
-                <input
-                  type="button"
+                <button
                   onClick={() => {
                     if (this.state.workSheet === false) {
                       this.setState({ workSheet: true });
@@ -565,7 +738,55 @@ class Simulator extends Component {
                       return;
                     }
                   }}
+                >
+                  Task
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="container">
+            <p className="container-header">Player</p>
+            <div className="box-devider1">
+              <div className="box-devider">
+                <button id="startPauseSwitch" onClick={() => this.Metronome()}>
+                  M
+                </button>
+                <button
+                  id="startPauseSwitch"
+                  onClick={() => this.startPauseSwitch()}
+                >
+                  {this.state.playIcon ? (
+                    <div className="button-play"></div>
+                  ) : null}
+                  {this.state.pauseIcon ? (
+                    <div className="button-pause"></div>
+                  ) : null}
+                </button>
+                <button id="clockStop" onClick={() => this.clockStop()}>
+                  <div className="button-stop"></div>
+                </button>
+                tempo
+                <input
+                  type="number"
+                  defaultValue="120"
+                  min="60"
+                  max="200"
+                  onChange={this.tempo.bind(this)}
                 />
+                bpm
+              </div>
+              <div className="box-devider">
+                <input
+                  type="range"
+                  id="vol"
+                  name="vol"
+                  min="0"
+                  max="100"
+                  defaultValue="100"
+                  onChange={this.volume.bind(this)}
+                ></input>
+                {this.state.volume}
               </div>
             </div>
           </div>
@@ -619,33 +840,6 @@ class Simulator extends Component {
                   </select>
                 </div>
                 <div>
-                  Key Signature
-                  <select value="null" onChange={this.handleChange}>
-                    {" "}
-                    key
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                    <option value="F">F</option>
-                    <option value="G">G</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                  </select>
-                  <input
-                    type="radio"
-                    name="accidental-starting"
-                    onClick={() => this.setState({ accidental: "#" })}
-                    defaultChecked="checked"
-                  />
-                  #
-                  <input
-                    type="radio"
-                    name="accidental-starting"
-                    onClick={() => this.setState({ accidental: "b" })}
-                  />
-                  b
-                </div>
-                <div>
                   <button onClick={() => this.setStarting()}>Apply</button>
                   <button onClick={() => this.removeStartingMeasure()}>
                     Delete Starting Measure
@@ -660,47 +854,7 @@ class Simulator extends Component {
               </div>
             </div>
           ) : null}
-          <div className="player">
-            <div className="container">
-              <p className="container-header">Player</p>
-              <div className="box-devider1">
-                <div className="box-devider">
-                  <button onClick={() => this.startPauseSwitch()}>
-                    {this.state.playIcon ? (
-                      <div className="button-play"></div>
-                    ) : null}
-                    {this.state.pauseIcon ? (
-                      <div className="button-pause"></div>
-                    ) : null}
-                  </button>
-                  <button onClick={() => this.clockStop()}>
-                    <div className="button-stop"></div>
-                  </button>
-                  tempo
-                  <input
-                    type="number"
-                    defaultValue="120"
-                    min="60"
-                    max="200"
-                    onChange={this.tempo.bind(this)}
-                  />
-                  {this.state.tempo}
-                </div>
-                <div className="box-devider">
-                  <input
-                    type="range"
-                    id="vol"
-                    name="vol"
-                    min="0"
-                    max="100"
-                    defaultValue="100"
-                    onChange={this.volume.bind(this)}
-                  ></input>
-                  {this.state.volume}
-                </div>
-              </div>
-            </div>
-          </div>
+
           {this.state.workSheet ? (
             <div>
               <WorkSheet />
@@ -712,10 +866,11 @@ class Simulator extends Component {
           {/* -------------------------------- Paper Canvas Area --------------------------------*/}
           <div className="paper-canvas-area">
             <div className="paper">
-              <div className="paper-header"> MuSimu</div>
+              <div className="paper-header"></div>
               <div className="paper-margin">
                 <Board
                   note={this.state.note}
+                  rest={this.state.rest}
                   clef={this.state.clef}
                   keySig={this.state.keySig}
                   accidental={this.state.accidental}
@@ -725,10 +880,10 @@ class Simulator extends Component {
                   down={this.state.down}
                   places={this.state.places}
                   handle={this.state.handle}
+                  metronome={this.state.metronome}
                   viewOptionOn={this.viewOptionOn}
                   viewOptionOff={this.viewOptionOff}
                   consoleWarningTS={this.consoleWarningTS}
-                  toWorkSheet={this.toWorkSheet}
                   consoleWarningClef={this.consoleWarningClef}
                   consoleWarningKS={this.consoleWarningKS}
                   removeWarning={this.removeWarning}
@@ -758,263 +913,4 @@ class Simulator extends Component {
   }
 }
 
-export default Simulator;
-
-// if (type === 1) {  //     -----------------------------   type 1 errors -----------
-//   console.log( "error =", error)
-//     if ( error === 0) { console.log("this is error no. 0")        //-----------------------------------if error number is 0-------------------
-//       for (let a = 1; a <= consWarn.length -1  ;a++) {//-----------------------------------find measure------ 1 [] starting from 1 up to end----- // --------------------
-//           if (consWarn[a].measure !== measure  && consWarn[a].error === error) { //  if not the same measure,,  then find next   ------------------
-//             continue;
-//           }
-//           else { //------------------------------------ if same measure,,  then just update----------------
-//             console.log( "edit type 1 error 0")
-//             consWarn[a].type = type
-//             consWarn[a].error = error
-//             consWarn[a].measure = measure
-//             consWarn[a].barLength = barLength
-//             consWarn[a].totalNoteValue = totalNoteValue
-//             consWarn[a].up = up
-//             consWarn[a].down = down
-//               this.setState({ consWarn }); console.log(this.state.consWarn)
-//             return;
-//           }
-//       }
-//           console.log("push for error 0") // new warning
-//           consWarn.push({
-//             type: type,
-//             error: error,
-//             measure: measure,
-//             barLength: barLength,
-//             totalNoteValue: totalNoteValue,
-//             show: false,
-//             up: up,
-//             down: down,
-//           });
-//         consWarn[0].warns = consWarn.length
-//         this.setState({ consWarn }); console.log(this.state.consWarn)
-//         this.findConsWarnLength();
-//         return;
-//     };
-
-//     if ( error === 1) {   console.log("this is error no. 1")     //-----------------------------------if error is no. 1
-//       for (let a = 1; a <= consWarn.length -1  ;a++) {//-----------------------------------1 [] starting from 1 up to end-----
-//         if (consWarn[a].measure !== measure && consWarn[a].error === error) { //  if not the same measure,,  then find next   ------------------
-//           continue;
-//         }
-//         else { //------------------------------------ if same measure,,  then just update----------------
-//           console.log( "edit type 1 error 1")
-
-//           consWarn[a].type = type
-//           consWarn[a].error = error
-//           consWarn[a].measure = measure
-//           consWarn[a].barLength = barLength
-//           consWarn[a].totalNoteValue = totalNoteValue
-//           consWarn[a].up = up
-//           consWarn[a].down = down
-//             this.setState({ consWarn }); console.log(this.state.consWarn)
-//           return;
-//         }
-//       }
-//           console.log("push or error 1") // new warning
-//           consWarn.push({
-//             type: type,
-//             error: error,
-//             measure: measure,
-//             barLength: barLength,
-//             totalNoteValue: totalNoteValue,
-//             show: false,
-//             up: up,
-//             down: down,
-//           });
-//         consWarn[0].warns = consWarn.length
-//         this.setState({ consWarn }); console.log(this.state.consWarn)
-//         this.findConsWarnLength();
-//         return;
-//     };
-
-//     if ( error === 2) {   console.log("this is error no. 2")     //-----------------------------------if error is no. 1
-//       for (let a = 1; a <= consWarn.length -1  ;a++) {//-----------------------------------1 [] starting from 1 up to end-----
-//         if (consWarn[a].measure !== measure && consWarn[a].error === error) { //  if not the same measure,,  then find next   ------------------
-//           continue;
-//         }
-//         else { //------------------------------------ if same measure,,  then just update----------------
-//           console.log( "edit type 1 error 1")
-
-//           consWarn[a].type = type
-//           consWarn[a].error = error
-//           consWarn[a].measure = measure
-//           consWarn[a].barLength = barLength
-//           consWarn[a].totalNoteValue = totalNoteValue
-//           consWarn[a].up = up
-//           consWarn[a].down = down
-//             this.setState({ consWarn }); console.log(this.state.consWarn)
-//           return;
-//         }
-//       }
-//           console.log("push or error 1") // new warning
-//           consWarn.push({
-//             type: type,
-//             error: error,
-//             measure: measure,
-//             barLength: barLength,
-//             totalNoteValue: totalNoteValue,
-//             show: false,
-//             up: up,
-//             down: down,
-//           });
-//         consWarn[0].warns = consWarn.length
-//         this.setState({ consWarn }); console.log(this.state.consWarn)
-//         this.findConsWarnLength();
-//         return;
-//     };
-
-//     if ( error === 3) {   console.log("this is error no. 3")     //-----------------------------------if error is no. 1
-//     for (let a = 1; a <= consWarn.length -1  ;a++) {//-----------------------------------1 [] starting from 1 up to end-----
-//       if (consWarn[a].measure !== measure && consWarn[a].error === error) { //  if not the same measure,,  then find next   ------------------
-//         continue;
-//       }
-//       else { //------------------------------------ if same measure,,  then just update----------------
-//         console.log( "edit type 1 error 3")
-
-//         consWarn[a].type = type
-//         consWarn[a].error = error
-//         consWarn[a].measure = measure
-//         consWarn[a].barLength = barLength
-//         consWarn[a].totalNoteValue = totalNoteValue
-//         consWarn[a].up = up
-//         consWarn[a].down = down
-//           this.setState({ consWarn }); console.log(this.state.consWarn)
-//         return;
-//       }
-//     }
-//         console.log("push type 1 error 3") // new warning
-//         consWarn.push({
-//           type: type,
-//           error: error,
-//           measure: measure,
-//           barLength: barLength,
-//           totalNoteValue: totalNoteValue,
-//           show: false,
-//           up: up,
-//           down: down,
-//         });
-//       consWarn[0].warns = consWarn.length
-//       this.setState({ consWarn }); console.log(this.state.consWarn)
-//       this.findConsWarnLength();
-//       return;
-//     };
-
-//     if ( error === 4) {   console.log("this is error no. 4")     //-----------------------------------if error is no. 1
-//     for (let a = 1; a <= consWarn.length -1  ;a++) {//-----------------------------------1 [] starting from 1 up to end-----
-//       console.log(consWarn[a].measure, measure, consWarn[a].error, error) //  if not the same measure,,  then find next   ------------------
-//       if (consWarn[a].measure !== measure && consWarn[a].error !== error) {
-//         continue;
-//       }
-//       else { //------------------------------------ if same measure,,  then just update----------------
-//         console.log("edit error no. 4")
-//         consWarn[a].type = type
-//         consWarn[a].error = error
-//         consWarn[a].measure = measure
-
-//         consWarn[a].barLength = barLength
-//         consWarn[a].up = up
-//         consWarn[a].down = down
-//           this.setState({ consWarn }); console.log(this.state.consWarn)
-//         return;
-//       }
-//     }
-//         console.log("push type 1 error 4") // new warning
-//         consWarn.push({
-//           type: type,
-//           error: error,
-//           measure: measure,
-//           barLength: barLength,
-//           show: false,
-//           up: up,
-//           down: down,
-//         });
-//       consWarn[0].warns = consWarn.length
-//       this.setState({ consWarn }); console.log(this.state.consWarn)
-//       this.findConsWarnLength();
-//       return;
-//     };
-
-//   if (consWarn.length !== 1) {
-//     for (let a = 1; a <= consWarn.length -1  ;a++) {
-//       if (consWarn[a].type === 1) {
-//         if (consWarn[a].measure !== measure) {
-//           continue;
-//         }
-//         else { // update
-//           consWarn[a].type = type
-//           consWarn[a].error = error
-//           consWarn[a].measure = measure
-//           consWarn[a].totalNoteValue = totalNoteValue
-//           consWarn[a].barLength = barLength
-//           consWarn[a].up = up
-//           consWarn[a].down = down
-//             this.setState({ consWarn })
-//           return;
-//         }
-//       }
-//     }
-//   }
-//   console.log("push") // new warning
-//   consWarn.push({
-//     type: type,
-//     error:error,
-//     measure: measure,
-//     totalNoteValue: totalNoteValue,
-//     barLength: barLength,
-//     show: false,
-//     up: up,
-//     down: down,
-
-//   });
-//     this.setState({ consWarn })
-//     console.log(this.state.consWarn)
-//     return;
-// }
-
-// if (type === 2) { //type 2 = Clef ---------------------------------------------------------------------------------------------
-
-//   if (error === 5) { console.log("find")
-//     for (let x = 1; x <= consWarn.length -1  ;x++) {//-----------------------------------find measure------ 1 [] starting from 1 up to end----- // --------------------
-//       if (consWarn[x].measure === measure) { //  if not the same measure,,  then find next   ------------------
-//         for (let y = 1; y <= consWarn.length -1  ;y++) {
-//           if (consWarn[y].type === type) {
-//             console.log( "edit type 2 error 4")
-//             consWarn[y].type = type
-//             consWarn[y].error = error
-//             consWarn[y].measure = measure
-//             consWarn[y].clef = clef
-//               this.setState({ consWarn }); console.log(this.state.consWarn)
-//           }
-//         }
-//       }
-//       else { //------------------------------------ if same measure,,  then just update----------------
-//         return;
-//       }
-//   }
-//   }
-//   console.log("push type 2") // new warning
-//   consWarn.push({
-//     type: type,
-//     error:error,
-//     measure: measure,
-//     totalNoteValue: totalNoteValue,
-//     barLength: barLength,
-//     clef: clef,
-//     show: false,
-//   });
-//     this.setState({ consWarn });console.log(this.state.consWarn)
-//     this.findConsWarnLength();
-//     return;
-// }
-// else {
-//   consWarn.push({
-//     type: type,
-//     error:error,
-//   });
-// }
+export default App;

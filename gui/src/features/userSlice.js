@@ -36,6 +36,18 @@ export const userSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    editProfileStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    editProfileSuccess: (state, action) => {
+      state.error = null;
+      state.loading = false;
+    },
+    editProfileFail: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
   },
 });
 
@@ -46,6 +58,9 @@ export const {
   getUserDetailFail,
   getUserDetailStart,
   getUserDetailSuccess,
+  editProfileFail,
+  editProfileStart,
+  editProfileSuccess,
 } = userSlice.actions;
 
 export const getUserList = (token) => {
@@ -83,6 +98,27 @@ export const getUserDetail = (token, id) => {
       })
       .catch((err) => {
         dispatch(getUserDetailFail(err.message));
+      });
+  };
+};
+
+export const editProfile = (token, formData, id) => {
+  return (dispatch) => {
+    dispatch(editProfileStart());
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    };
+    axios
+      .put(`${process.env.REACT_APP_AXIOS_URL}/users/all/${id}/`, formData)
+      .then((res) => {
+        dispatch(editProfileSuccess());
+        dispatch(getUserDetail(token, id));
+        console.log(res.data);
+        console.log("private user data updated!");
+      })
+      .catch((err) => {
+        dispatch(editProfileFail(err.message));
       });
   };
 };

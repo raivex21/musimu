@@ -48,7 +48,7 @@ export default function Teachers() {
             </TableHead>
             <TableBody>
               {teachers.map((row) => (
-                <TableRow key={row.name}>
+                <TableRow key={row.id}>
                   <TableCell component="th" scope="row">
                     <A href={`/profile/${row.id}`}>{row.full_name}</A>
                   </TableCell>

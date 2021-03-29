@@ -12,6 +12,7 @@ import gradeSlice from "../features/gradeSlice";
 import messageSlice from "../features/messageSlice";
 import boardSlice from "../features/boardSlice";
 import convoSlice from "../features/convoSlice";
+import taskSlice from "../features/taskSlice";
 
 export default configureStore({
   reducer: {
@@ -27,5 +28,6 @@ export default configureStore({
     message: messageSlice,
     board: boardSlice,
     convo: convoSlice,
+    task: taskSlice,
   },
 });

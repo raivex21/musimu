@@ -29,13 +29,13 @@ function Header(props) {
         <span className="musimu">Musimu</span>
       </div>
       <div className="header__navbar">
-        <IconButton>
+        {/* <IconButton>
           <NotificationsActiveIcon />
-        </IconButton>
+        </IconButton> */}
         <IconButton onClick={() => navigate("/inbox")}>
           <MailIcon />
         </IconButton>
-        <CreateMessage />
+        {/* <CreateMessage /> */}
         <IconButton onClick={handleLogout}>
           <Avatar src={`${process.env.REACT_APP_AXIOS_URL}${avatar}`} />
         </IconButton>

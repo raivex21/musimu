@@ -12,19 +12,17 @@ function EnrollmentsList() {
 
   useEffect(() => {
     dispatch(getEnrollments(token, userId));
-
-    // eslint-disable-next-line
-  }, []);
+  }, [token, userId, dispatch]);
 
   return (
     <>
       <div className="dashboard__grid">
         {enrollments &&
-          enrollments.map((enrollment) => (
+          enrollments.map((enrollment, index) => (
             <div
-              key={enrollment.id}
               className="dashboard__card"
               onClick={() => navigate(`/classroom/${enrollment.id}`)}
+              key={index}
             >
               <Card
                 key={enrollment.classroom_detail.id}

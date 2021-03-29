@@ -3,7 +3,6 @@ import EnrollmentsList from "../components/EnrollmentsList";
 import { useSelector } from "react-redux";
 
 import ClassroomList from "../components/ClassroomList.js";
-import StudentList from "../components/StudentList";
 import AnnouncementList from "../components/AnnouncementList";
 import CreateClassroom from "../components/CreateClassroom";
 import CreateAnnouncement from "../components/CreateAnnouncement";
@@ -28,14 +27,16 @@ function Dashboard() {
           {is_teacher && (
             <div className="head__buttons">
               <CreateClassroom />
-              <EditClassroom />
+              {/* <EditClassroom /> */}
 
               <CreateAnnouncement />
             </div>
           )}
         </div>
         <div className="dashboard__classrooms">
-          {is_teacher ? <ClassroomList /> : <EnrollmentsList />}
+          {/* {is_teacher ? <ClassroomList /> : <EnrollmentsList />} */}
+          {is_teacher ? <ClassroomList /> : null}
+          {is_teacher === false ? <EnrollmentsList /> : null}
         </div>
         {/* <div className="dashboard__students">
           <div className="dashboard__students-search">

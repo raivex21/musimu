@@ -27,12 +27,12 @@ import React from 'react';
         let error = [
                     "Empty measure",                                                            // 0
                     "Insuficient beat counts at measure ",                                      // 1
-                    "Too much notes at measure ",                                               // 2
+                    "Too many notes at measure ",                                               // 2
                     "Time Signature is not yet set for measure",                                // 3
                     "Adding barline without declaring time signature for starting measure",     // 4
                     "Adding Note without starting measure is not fully for starting measure",   // 5
 
-                    "Clef is note yet set for measure",                                         // 6
+                    "Clef is not yet set for measure",                                         // 6
                     "Unable to play without knowing the clef",                                  // 7
 
                     "Putting another accidental vertically. Warning detected before measure",   //8

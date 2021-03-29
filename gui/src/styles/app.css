@@ -802,10 +802,10 @@ a:hover {
 }
 
 .inbox__container {
-  flex: 1;
   background-color: #76aad8;
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 
 .inbox__senders {
@@ -828,12 +828,13 @@ a:hover {
 .inbox__content {
   background-color: #999999;
   width: 80%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .inbox__head {
-  height: 10%;
+  height: 8%;
   background-color: #19456b;
   display: flex;
   color: white;
@@ -856,7 +857,7 @@ a:hover {
 
 .inbox__newMessage {
   border-top: 1px solid rgb(133, 133, 133);
-  height: 70px;
+  height: 7%;
   background-color: rgb(255, 255, 255);
   display: flex;
 }
@@ -1038,4 +1039,14 @@ a:hover {
   border-radius: 25px;
   margin: 0 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.tasklist {
+  display: flex;
+  flex-direction: column;
+  background-color: #041829;
+  color: white;
+  padding: 10px;
+  border-radius: 15px;
+  margin: 10px;
 }

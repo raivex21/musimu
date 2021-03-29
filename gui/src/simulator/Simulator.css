@@ -7,7 +7,7 @@
 .container {
   background: rgb(219, 242, 252);
   border: 1px solid rgb(132, 218, 255);
-  width: 600px;
+  width: 100%;
 }
 
 .box-devider {
@@ -69,7 +69,7 @@
   z-index: 1;
   box-shadow: 1px 1px 2px black, 0 0 25px rgb(177, 177, 214),
     0 0 5px rgb(237, 237, 255);
-  top: 70px;
+  top: 160px;
   margin-left: 30%;
   width: 30%;
 }
@@ -98,6 +98,7 @@
 }
 
 .paper-canvas-area {
+  margin-top: 90px;
   overflow-x: auto;
   overflow-y: auto;
   width: 80%;
@@ -526,5 +527,9 @@
 }
 
 .tasks__panel {
+  background-color: white;
+}
+
+.tool__tasks {
   background-color: white;
 }

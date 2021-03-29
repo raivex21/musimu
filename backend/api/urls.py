@@ -18,8 +18,8 @@ from api.views import (
     MessageViewSet,
     TaskViewSet,
     ConditionViewSet,
-    # SubCategoryViewSet,
-    # CategoryViewSet,
+    SubCategoryViewSet,
+    CategoryViewSet,
     BoardViewSet,
     BoardMessagesViewSet,
     ConvoMessageViewSet,
@@ -44,13 +44,10 @@ router.register(r'classroom_quiz', ClassroomQuizListViewSet, basename="classroom
 router.register(r'messages', MessageViewSet, basename="messages")
 router.register(r'tasks', TaskViewSet, basename="tasks")
 router.register(r'conditions', ConditionViewSet, basename="conditions")
-# router.register(r'categories', CategoryViewSet, basename="categories")
-# router.register(r'subcategories', SubCategoryViewSet, basename="subcategories")
-
+router.register(r'categories', CategoryViewSet, basename="categories")
+router.register(r'subcategories', SubCategoryViewSet, basename="subcategories")
 router.register(r'boards', BoardViewSet, basename="boards")
 router.register(r'board_messages', BoardMessagesViewSet, basename="board_messages")
-
-
 router.register(r'convos', ConvoViewSet, basename="convos")
 router.register(r'convo_message', ConvoMessageViewSet, basename="convo_messages")
 urlpatterns = router.urls

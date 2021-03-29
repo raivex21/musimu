@@ -30,6 +30,7 @@ export default function SidebarMenu() {
     "/modules",
     `/profile/${userId}`,
     "/teachers",
+    "/task",
   ];
 
   return (
@@ -134,6 +135,24 @@ export default function SidebarMenu() {
             }
           />
         </ListItem>
+        {is_teacher && (
+          <ListItem
+            button
+            selected={selectedIndex === 6}
+            onClick={(event) => handleListItemClick(event, 6)}
+          >
+            <ListItemIcon>
+              <AssignmentIndIcon color="secondary" />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography type="body2" style={{ color: "#16c79a" }}>
+                  Tasks
+                </Typography>
+              }
+            />
+          </ListItem>
+        )}
       </List>
     </>
   );
