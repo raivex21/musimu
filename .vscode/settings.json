@@ -1,4 +1,3 @@
 {
-    "git.ignoreLimitWarning": true,
-    "python.pythonPath": "c:\\Users\\Raivex\\Desktop\\THESIS\\heroku-deploy\\venv\\Scripts\\python.exe"
+    "git.ignoreLimitWarning": true
 }
