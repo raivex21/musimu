@@ -198,10 +198,6 @@ AUTH_USER_MODEL = 'users.User'
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'build/static')
-]
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
@@ -211,3 +207,4 @@ MEDIA_URL = '/media/'
 
 options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
+django_heroku.settings(locals())
