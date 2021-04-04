@@ -1,6 +1,6 @@
 {
   "name": "gui",
-  "homepage": "http://.",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "proxy": "musimu.herokuapp.com",
