@@ -37,7 +37,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = '&4o$27o=2!rn=kfrw0p@p)-mj@!u3q++uqk6pcn86q3%v@fuef'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1:8000', 'localhost:8000', 'musimu.herokuapp.com']
 
