@@ -8,6 +8,8 @@ export const taskSlice = createSlice({
     task: {},
     loading: false,
     error: null,
+    complete: null,
+    gradedTask: null,
   },
   reducers: {
     getTaskListStart: (state) => {
@@ -48,6 +50,21 @@ export const taskSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    saveTaskProgress: (state, action) => {
+      state.complete = action.payload;
+    },
+    createGradedTaskStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    createGradedTaskSuccess: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
+    createGradedTaskFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -61,6 +78,10 @@ export const {
   createTaskFail,
   createTaskSuccess,
   createTaskStart,
+  saveTaskProgress,
+  createGradedTaskStart,
+  createGradedTaskFail,
+  createGradedTaskSuccess,
 } = taskSlice.actions;
 
 export const getTaskList = (token) => {
@@ -116,6 +137,31 @@ export const createTask = (token, formData) => {
       .catch((err) => {
         dispatch(createTaskFail(err.message));
       });
+  };
+};
+
+export const createGradedTask = (token, formData) => {
+  return (dispatch) => {
+    dispatch(createGradedTaskStart());
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    };
+    axios
+      .post(`${process.env.REACT_APP_AXIOS_URL}/api/graded-task/`, formData)
+      .then((res) => {
+        dispatch(createGradedTaskSuccess(res.data));
+        dispatch(getTaskList(token));
+      })
+      .catch((err) => {
+        dispatch(createGradedTaskFail(err.message));
+      });
+  };
+};
+
+export const progress = (complete) => {
+  return (dispatch) => {
+    dispatch(saveTaskProgress(complete));
   };
 };
 

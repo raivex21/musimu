@@ -1050,3 +1050,72 @@ a:hover {
   border-radius: 15px;
   margin: 10px;
 }
+
+.lessons {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.create-lesson {
+  padding: 20px;
+
+  background-color: white;
+}
+
+.lesson-list {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.lesson-name {
+  padding: 20px;
+}
+
+.lesson-name:hover {
+  cursor: pointer;
+  background-color: #01569b;
+}
+
+.sim-task {
+  background-color: white;
+}
+
+.task-item {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.task-item:hover {
+  background-color: #1ceeb9;
+}
+
+.task-detail {
+  padding: 10px;
+}
+
+.back-button {
+  margin-right: 10px;
+}
+
+.lesson {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.lesson-content {
+  margin: 20px;
+}
+.lesson-images {
+  display: flex;
+  justify-content: space-evenly;
+}
+.lesson-images > img {
+  width: 500px;
+  object-fit: contain;
+}
+
+.add-lesson {
+  padding: 20px;
+}

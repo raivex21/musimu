@@ -31,6 +31,7 @@ export default function SidebarMenu() {
     `/profile/${userId}`,
     "/teachers",
     "/task",
+    "/create-lesson",
   ];
 
   return (
@@ -153,6 +154,22 @@ export default function SidebarMenu() {
             />
           </ListItem>
         )}
+        <ListItem
+          button
+          selected={selectedIndex === 7}
+          onClick={(event) => handleListItemClick(event, 7)}
+        >
+          <ListItemIcon>
+            <AssignmentIndIcon color="secondary" />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography type="body2" style={{ color: "#16c79a" }}>
+                Lesson Modules
+              </Typography>
+            }
+          />
+        </ListItem>
       </List>
     </>
   );

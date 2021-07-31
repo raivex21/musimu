@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import Board from "./Board";
-import WorkSheet from "./WorkSheet";
 import ConsWarn from "./Console";
 import "./Simulator.css";
+import { connect } from "react-redux";
+import getTaskList from "../features/taskSlice";
+import Task from "./Task";
 
 class App extends Component {
   constructor(props) {
@@ -49,19 +51,201 @@ class App extends Component {
       consWarn: [{ start: true, warns: 0 }],
 
       workSheet: false,
-      task: [],
+      task: [
+        { kind: "clef", what: "G", complete: false },
+        { kind: "keySig", what: "C", complete: false },
+        { kind: "timeSig", whatUp: 4, whatDown: 4, complete: false },
+      ],
+      measureTask: [],
+      taskRender: [],
+      completed: 0,
+      percentage: 0,
+
+      taskX: 0,
+      taskClef: 0,
+      taskUp: 0,
+      taskDown: 0,
+      taskKeySig: 0,
     };
     this.viewOptionOn = this.viewOptionOn.bind(this);
     this.viewOptionOff = this.viewOptionOff.bind(this);
   }
-  // toWorkSheet = (clef, up, down, keySig) => {
-  // console.log(clef,  up, down, keySig)
-  // }
 
-  toWorkSheet = () => {
-    console.log("aaa");
+  runMe = (x, clef, up, down, keySig) => {
+    // let measureTask = this.state.measureTask;
+    // let a = 1;
+    let taskX = this.state.taskX;
+    let taskClef = this.state.taskClef;
+    let taskUp = this.state.taskUp;
+    let taskDown = this.state.taskDown;
+    let taskKeySig = this.state.taskKeySig;
+    console.log((x, clef, up, down, keySig));
+
+    this.setState({
+      taskX: x,
+      taskClef: clef,
+      taskUp: up,
+      taskDown: down,
+      taskKeySig: keySig,
+    });
+
+    console.log(
+      this.state.taskX,
+      this.state.taskClef,
+      this.state.taskUp,
+      this.state.taskDown,
+      this.state.taskKeySig
+    );
   };
 
+  task = () => {
+    let task = this.state.task;
+    let measureTask = this.state.measureTask;
+    let taskRender = this.state.taskRender;
+    let completed = this.state.completed;
+
+    if (task !== 0) {
+      for (let y = 0; y < measureTask.length; y++) {
+        let c = 0;
+
+        for (let i = 0; i < task.length; i++) {
+          console.log(i);
+          if (task[i].kind === "clef") {
+            console.log("clef");
+            let kindClef = "G";
+            if (measureTask[y].clef === "𝄢") {
+              kindClef = "F";
+            }
+
+            if (task[i].what === kindClef) {
+              console.log("task complete");
+              task[i].complete = true;
+
+              taskRender[i] = "Make a " + task[y].what + " clef  - completed";
+            } else {
+              console.log("task not complete");
+              task[i].complete = false;
+              taskRender[i] =
+                "Make a " + task[y].what + " clef  - not complete";
+            }
+            continue;
+          }
+
+          if (task[i].kind === "keySig") {
+            console.log("key");
+            if (task[i].what === measureTask[y].keySig) {
+              console.log("task complete");
+              task[i].complete = true;
+
+              taskRender[i] =
+                "Make key of " + this.state.task[y].what + "  - completed";
+            } else {
+              console.log("task not complete");
+              task[i].complete = false;
+              taskRender[i] = "Make key of " + task[y].what + " - not complete";
+            }
+            continue;
+          }
+
+          if (task[i].kind === "timeSig") {
+            console.log("time");
+
+            if (task[i].whatUp === measureTask[y].up) {
+              console.log("task complete");
+              c++;
+              taskRender[i] =
+                "Make a " +
+                task[y].whatUp +
+                " " +
+                task[y].whatUp +
+                " time signature clef  - completed";
+            } else {
+              console.log("task not complete");
+              taskRender[i] =
+                "Make a " +
+                task[y].whatUp +
+                " " +
+                task[y].whatUp +
+                " time signature clef  - not complete";
+            }
+
+            if (task[i].whatDown === measureTask[y].down) {
+              console.log("task complete");
+              c++;
+              taskRender[i] =
+                "Make a " +
+                task[y].whatUp +
+                " " +
+                task[y].whatDown +
+                " time signature clef  - not complete";
+            } else {
+              console.log("task not complete");
+              taskRender[i] =
+                "Make a " +
+                task[y].whatUp +
+                " " +
+                task[y].whatDown +
+                " time signature clef  - completed";
+            }
+            if (c === 2) {
+              task[i].complete = true;
+            } else {
+              task[i].complete = false;
+            }
+            continue;
+          }
+        }
+        completed = 0;
+        for (let a = 0; a < task.length; a++) {
+          if (task[a].complete === true) {
+            console.log("completed + 1");
+            completed++;
+            this.setState({ completed });
+          }
+        }
+
+        console.log(completed);
+        let percentage = this.state.percentage;
+        percentage = 0;
+        percentage = (this.state.completed / this.state.task.length) * 100;
+        this.setState({ task, taskRender, completed, percentage });
+        console.log(percentage);
+      }
+    }
+  };
+
+  taskRender = () => {
+    if (this.state.task.length !== 0) {
+      let task = this.state.task;
+      let taskRender = this.state.taskRender;
+      let nC = "  - not complete";
+
+      for (let y = 0; y < task.length; y++) {
+        console.log(task[y], y);
+        if (task[y].kind === "clef") {
+          taskRender.push("Make a " + task[y].what + " clef" + nC);
+        }
+
+        if (task[y].kind === "keySig") {
+          taskRender.push("Make key of " + task[y].what + nC);
+        }
+
+        if (task[y].kind === "timeSig") {
+          taskRender.push(
+            "Make a " +
+              task[y].whatUp +
+              " " +
+              task[y].whatDown +
+              " time signature" +
+              nC
+          );
+        }
+      }
+
+      this.setState({ taskRender });
+      console.log(this.state.taskRender);
+    }
+  };
   consoleWarningTS = (
     type,
     measure,
@@ -87,11 +271,8 @@ class App extends Component {
     consWarn[0].warn = true;
 
     if (consWarn.length > 1) {
-      console.log("measure =", measure, "type =", type, "error =", error);
       for (let a = 1; a <= consWarn.length - 1; a++) {
         if (consWarn[a].measure === measure && consWarn[a].type === type) {
-          console.log("measure =", measure, "type =", type);
-
           if (
             consWarn[a].error === 0 ||
             consWarn[a].error === 1 ||
@@ -101,7 +282,6 @@ class App extends Component {
             consWarn[a].error === 5
           ) {
             // if  error = 1 or 2 or 3 exist, update warning------
-            console.log("error =", error);
             consWarn[a].type = type;
             consWarn[a].error = error;
             consWarn[a].measure = measure;
@@ -116,7 +296,6 @@ class App extends Component {
         }
       }
       //add new warning
-      console.log("add warning for ----------- measure and type only");
       consWarn.push({
         type: type,
         error: error,
@@ -128,7 +307,6 @@ class App extends Component {
         down: down,
       });
     } else {
-      console.log("add warning for ----------- new 3 parameters ");
       consWarn.push({
         type: type,
         error: error,
@@ -271,10 +449,8 @@ class App extends Component {
       }
     }
   };
-
   removeWarning = (type, measure, error) => {
     let consWarn = this.state.consWarn;
-    console.log("Remove warning", type, measure, consWarn.length - 1);
 
     for (let a = 1; a <= consWarn.length - 1; a++) {
       console.log(a, consWarn[a].show);
@@ -332,7 +508,6 @@ class App extends Component {
     // }
     // this.findConsWarnLength();
   };
-
   recalcuConsoleMeasure = (measure) => {
     let consWarn = this.state.consWarn;
     console.log(consWarn.length);
@@ -353,7 +528,6 @@ class App extends Component {
     }
     this.findConsWarnLength();
   };
-
   findConsWarnLength() {
     let consWarn = this.state.consWarn;
     let a = consWarn.length;
@@ -363,13 +537,11 @@ class App extends Component {
     });
     console.log(this.state.consWarn[0].warns);
   }
-
   handleChange = (event) => {
     this.setState({
       keySig: event.target.value,
     });
   };
-
   renderMe() {
     let places = this.state.places;
     let alphabet = this.state.alphabet;
@@ -419,37 +591,31 @@ class App extends Component {
     });
     console.log(this.state.places);
   }
-
   keySigUp = (event) => {
     this.setState({
       up: parseInt(event.target.value),
     });
   };
-
   keySigDown = (event) => {
     this.setState({
       down: parseInt(event.target.value),
     });
   };
-
   viewOptionOn() {
     this.setState({
       viewOption: true,
     });
   }
-
   viewOptionOff() {
     this.setState({
       viewOption: false,
     });
   }
-
   insertStartingMeasureDisabler = (swt) => {
     this.setState({
       buttonBoolSMD: swt,
     });
   };
-
   playerIcon = (playIcon) => {
     console.log("player is on", playIcon);
     let plI = this.state.playIcon;
@@ -463,13 +629,11 @@ class App extends Component {
     }
     this.setState({ playIcon: plI, pauseIcon: paI });
   };
-
   tempo(event) {
     this.setState({
       tempo: parseInt(event.target.value),
     });
   }
-
   Metronome() {
     console.log("metronome");
     let met = null;
@@ -489,63 +653,62 @@ class App extends Component {
 
   componentDidMount() {
     document.onkeydown = this.onKeyDown;
+    this.taskRender();
+    // this.props.getTaskList(this.props.token);
   }
+  // onKeyDown = (e) => {
+  //   e = e || window.event;
+  //   switch (e.keyCode) {
+  //     case 81:
+  //       document.getElementById("wholeNote").click();
+  //       break;
+  //     case 87:
+  //       document.getElementById("halfNote").click();
+  //       break;
+  //     case 69:
+  //       document.getElementById("quarterNote").click();
+  //       break;
+  //     case 82:
+  //       document.getElementById("eightNote").click();
+  //       break;
 
-  onKeyDown = (e) => {
-    e = e || window.event;
-    // switch (e.keyCode) {
-    //   case 81:
-    //     document.getElementById("wholeNote").click();
-    //     break;
-    //   case 87:
-    //     document.getElementById("halfNote").click();
-    //     break;
-    //   case 69:
-    //     document.getElementById("quarterNote").click();
-    //     break;
-    //   case 82:
-    //     document.getElementById("eightNote").click();
-    //     break;
+  //     case 89:
+  //       document.getElementById("wholeNoteRest").click();
+  //       break;
+  //     case 85:
+  //       document.getElementById("halfNoteRest").click();
+  //       break;
+  //     case 73:
+  //       document.getElementById("quarterNoteRest").click();
+  //       break;
+  //     case 79:
+  //       document.getElementById("eightNoteRest").click();
+  //       break;
+  //     case 83:
+  //       document.getElementById("select").click();
+  //       break;
+  //     case 90:
+  //       document.getElementById("flat").click();
+  //       break;
+  //     case 88:
+  //       document.getElementById("sharp").click();
+  //       break;
+  //     case 67:
+  //       document.getElementById("natural").click();
+  //       break;
+  //     case 66:
+  //       document.getElementById("barLine").click();
+  //       break;
+  //     case 32:
+  //       document.getElementById("startPauseSwitch").click();
+  //       break;
+  //     case 77:
+  //       document.getElementById("clockStop").click();
+  //       break;
 
-    //   case 89:
-    //     document.getElementById("wholeNoteRest").click();
-    //     break;
-    //   case 85:
-    //     document.getElementById("halfNoteRest").click();
-    //     break;
-    //   case 73:
-    //     document.getElementById("quarterNoteRest").click();
-    //     break;
-    //   case 79:
-    //     document.getElementById("eightNoteRest").click();
-    //     break;
-
-    //   case 83:
-    //     document.getElementById("select").click();
-    //     break;
-
-    //   case 90:
-    //     document.getElementById("flat").click();
-    //     break;
-    //   case 88:
-    //     document.getElementById("sharp").click();
-    //     break;
-    //   case 67:
-    //     document.getElementById("natural").click();
-    //     break;
-    //   case 66:
-    //     document.getElementById("barLine").click();
-    //     break;
-    //   case 32:
-    //     document.getElementById("startPauseSwitch").click();
-    //     break;
-    //   case 77:
-    //     document.getElementById("clockStop").click();
-    //     break;
-
-    //   default:
-    // }
-  };
+  //     default:
+  //   }
+  // };
 
   render() {
     let consWarn = this.state.consWarn.map((consWarn, index) => {
@@ -557,6 +720,15 @@ class App extends Component {
           readMore={this.readMore}
           removeWarning={this.removeWarning}
         />
+      );
+    });
+
+    let taskRender = this.state.taskRender.map((taskRender, index) => {
+      return (
+        <li key={index}>
+          {taskRender}
+          <br />
+        </li>
       );
     });
 
@@ -726,22 +898,6 @@ class App extends Component {
                 />{" "}
                 Bar line
               </div>
-              <div className="box-devider">
-                <button
-                  onClick={() => {
-                    if (this.state.workSheet === false) {
-                      this.setState({ workSheet: true });
-                      return;
-                    }
-                    if (this.state.workSheet === true) {
-                      this.setState({ workSheet: false });
-                      return;
-                    }
-                  }}
-                >
-                  Task
-                </button>
-              </div>
             </div>
           </div>
 
@@ -789,6 +945,21 @@ class App extends Component {
                 {this.state.volume}
               </div>
             </div>
+            <div
+              className="box-devider"
+              onClick={() => {
+                if (this.state.workSheet === false) {
+                  this.setState({ workSheet: true });
+                  return;
+                }
+                if (this.state.workSheet === true) {
+                  this.setState({ workSheet: false });
+                  return;
+                }
+              }}
+            >
+              Task
+            </div>
           </div>
 
           {/* ----------------------------------- Measurments ----------------------------------- */}
@@ -798,10 +969,10 @@ class App extends Component {
                 <p className="container-header">Measurments</p>
                 <div>
                   Clef
-                  <button onClick={() => this.setState({ clef: "G" })}>
+                  <button onClick={() => this.setState({ clef: "𝄞" })}>
                     G clef
                   </button>
-                  <button onClick={() => this.setState({ clef: "F" })}>
+                  <button onClick={() => this.setState({ clef: "𝄢" })}>
                     F Clef
                   </button>
                 </div>
@@ -840,7 +1011,14 @@ class App extends Component {
                   </select>
                 </div>
                 <div>
-                  <button onClick={() => this.setStarting()}>Apply</button>
+                  <button
+                    onClick={() => {
+                      this.setStarting();
+                    }}
+                  >
+                    Apply
+                  </button>
+
                   <button onClick={() => this.removeStartingMeasure()}>
                     Delete Starting Measure
                   </button>
@@ -855,12 +1033,40 @@ class App extends Component {
             </div>
           ) : null}
 
+          {/* ----------------------------------- Task ----------------------------------- */}
           {this.state.workSheet ? (
-            <div>
-              <WorkSheet />
+            <div className="container">
+              <div className="container-popUp">
+                <p className="container-header">Task</p>
+                {/* {taskRender} */}
+                <Task
+                  x={this.state.taskX}
+                  taskClef={this.state.taskClef}
+                  taskUp={this.state.taskUp}
+                  taskDown={this.state.taskDown}
+                  taskKeySig={this.state.taskKeySig}
+                />
+              </div>
             </div>
           ) : null}
         </div>
+
+        {/* Task bar ----------------------------------------------------------------- */}
+        {/* <div
+          className="task"
+          onClick={() => {
+            if (this.state.workSheet === false) {
+              this.setState({ workSheet: true });
+              return;
+            }
+            if (this.state.workSheet === true) {
+              this.setState({ workSheet: false });
+              return;
+            }
+          }}
+        >
+          task: {this.state.completed}/{this.state.task.length}
+        </div> */}
 
         <div className="area1">
           {/* -------------------------------- Paper Canvas Area --------------------------------*/}
@@ -883,6 +1089,7 @@ class App extends Component {
                   metronome={this.state.metronome}
                   viewOptionOn={this.viewOptionOn}
                   viewOptionOff={this.viewOptionOff}
+                  runMe={this.runMe}
                   consoleWarningTS={this.consoleWarningTS}
                   consoleWarningClef={this.consoleWarningClef}
                   consoleWarningKS={this.consoleWarningKS}
@@ -912,5 +1119,18 @@ class App extends Component {
     );
   }
 }
+// const mapStateToProps = (state) => {
+//   return {
+//     task: state.task.task,
+//     taskList: state.task.taskList,
+//     token: state.auth.token,
+//   };
+// };
+
+// const mapDispatchToProps = (state) => {
+//   return {
+//     getTaskList: (token) => dispatchEvent(getTaskList(token)),
+//   };
+// };
 
 export default App;

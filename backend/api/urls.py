@@ -23,7 +23,10 @@ from api.views import (
     BoardViewSet,
     BoardMessagesViewSet,
     ConvoMessageViewSet,
-    ConvoViewSet
+    ConvoViewSet,
+    LessonViewSet,
+    LessonStepViewSet,
+    GradedTaskViewSet
 )
 
 router = DefaultRouter()
@@ -50,4 +53,7 @@ router.register(r'boards', BoardViewSet, basename="boards")
 router.register(r'board_messages', BoardMessagesViewSet, basename="board_messages")
 router.register(r'convos', ConvoViewSet, basename="convos")
 router.register(r'convo_message', ConvoMessageViewSet, basename="convo_messages")
+router.register(r'lessons', LessonViewSet, basename="lessons")
+router.register(r'lesson-steps', LessonStepViewSet, basename="lesson-steps")
+router.register(r'graded-task', GradedTaskViewSet, basename="graded-task")
 urlpatterns = router.urls

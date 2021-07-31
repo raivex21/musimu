@@ -22,7 +22,10 @@ from api.models import (
     Board,
     BoardMessages,
     Convo,
-    ConvoMessage
+    ConvoMessage,
+    Lesson,
+    LessonStep,
+    GradedTask
 )
 from api.serializers import (
     AnnouncementSerializer,
@@ -47,7 +50,10 @@ from api.serializers import (
     BoardMessagesSerializer,
     BoardSerializer,
     ConvoSerializer,
-    ConvoMessageSerializer
+    ConvoMessageSerializer,
+    LessonSerializer,
+    LessonStepSerializer,
+    GradedTaskSerializer,
 
 )
 
@@ -77,6 +83,10 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
 class ClassroomViewSet(viewsets.ModelViewSet):
     queryset = Classroom.objects.all()
     serializer_class = ClassroomSerializer
+    filter_backends = [filters.DjangoFilterBackend]
+    filter_fields = ('teacher_id', 'students__id')
+    
+
 
 class EnrollmentViewSet(viewsets.ModelViewSet):
     queryset = Enrollment.objects.all()
@@ -162,3 +172,14 @@ class ConvoMessageViewSet(viewsets.ModelViewSet):
     queryset = ConvoMessage.objects.all()
     serializer_class = ConvoMessageSerializer
 
+class LessonViewSet(viewsets.ModelViewSet):
+    queryset = Lesson.objects.all()
+    serializer_class = LessonSerializer
+
+class LessonStepViewSet(viewsets.ModelViewSet):
+    queryset = LessonStep.objects.all()
+    serializer_class = LessonStepSerializer
+
+class GradedTaskViewSet(viewsets.ModelViewSet):
+    queryset = GradedTask.objects.all()
+    serializer_class = GradedTaskSerializer

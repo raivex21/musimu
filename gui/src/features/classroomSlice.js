@@ -91,14 +91,13 @@ export const getClassroomList = (token, id) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .get(process.env.REACT_APP_AXIOS_URL + "/api/classrooms/")
+      .get(
+        `${process.env.REACT_APP_AXIOS_URL}/api/classrooms/?teacher_id=${id}`
+      )
       .then((res) => {
         console.log("getting classrooms successful");
         console.log(res.data);
-        const classrooms = res.data.filter(
-          (classroom) => classroom.teacher_id === id
-        );
-        dispatch(getClassroomListSuccess(classrooms));
+        dispatch(getClassroomListSuccess(res.data));
       })
       .catch((err) => {
         dispatch(getClassroomListFail(err.message));

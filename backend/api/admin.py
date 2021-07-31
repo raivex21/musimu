@@ -20,7 +20,10 @@ from api.models import (
     Board,
     BoardMessages,
     Convo,
-    ConvoMessage
+    ConvoMessage,
+    Lesson,
+    LessonStep,
+    GradedTask
 )
 
 admin.site.register(Level)
@@ -44,3 +47,6 @@ admin.site.register(Board)
 admin.site.register(BoardMessages)
 admin.site.register(Convo)
 admin.site.register(ConvoMessage)
+admin.site.register(Lesson)
+admin.site.register(LessonStep)
+admin.site.register(GradedTask)

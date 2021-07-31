@@ -7,7 +7,6 @@
 .container {
   background: rgb(219, 242, 252);
   border: 1px solid rgb(132, 218, 255);
-  width: 100%;
 }
 
 .box-devider {
@@ -56,10 +55,21 @@
 }
 
 .tool {
+  margin-top: 50px;
   position: fixed;
   z-index: 1;
-  top: 70px;
-  width: 50%;
+  top: 0;
+  width: auto;
+  box-shadow: 1px 1px 2px black, 0 0 25px rgb(177, 177, 214),
+    0 0 5px rgb(237, 237, 255);
+}
+
+.task {
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  width: auto;
+  background-color: #179cbd;
   box-shadow: 1px 1px 2px black, 0 0 25px rgb(177, 177, 214),
     0 0 5px rgb(237, 237, 255);
 }
@@ -69,8 +79,8 @@
   z-index: 1;
   box-shadow: 1px 1px 2px black, 0 0 25px rgb(177, 177, 214),
     0 0 5px rgb(237, 237, 255);
-  top: 160px;
-  margin-left: 30%;
+  top: 0;
+  margin-left: 50%;
   width: 30%;
 }
 
@@ -98,7 +108,6 @@
 }
 
 .paper-canvas-area {
-  margin-top: 90px;
   overflow-x: auto;
   overflow-y: auto;
   width: 80%;
@@ -142,6 +151,7 @@
 }
 
 .console-canvas-area {
+  top: 55px;
   position: fixed;
   right: 0;
   bottom: 0;
@@ -485,12 +495,11 @@
 }
 
 .whole {
-  width: 35px;
-  height: 15px;
-  border-radius: 50%;
-  background: blue;
-  color: black(64, 255, 0);
-  font-size: 15px;
+  color: black;
+  font-size: 70px;
+  text-align-last: center;
+  text-combine-upright: initial;
+  margin-bottom: 50px;
 }
 
 .cell-open:hover {
@@ -511,25 +520,17 @@
   width: 500px;
 }
 
-.simulator > h1 {
+h1 {
   font-size: 70px;
   font-family: unset;
   position: absolute;
   text-align: right;
 }
 
-.simulator > h2 {
+h2 {
   font-size: 30px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana;
   position: absolute;
   text-align: center;
-}
-
-.tasks__panel {
-  background-color: white;
-}
-
-.tool__tasks {
-  background-color: white;
 }

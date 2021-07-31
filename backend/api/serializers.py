@@ -23,7 +23,10 @@ from api.models import (
     Board,
     BoardMessages,
     Convo,
-    ConvoMessage
+    ConvoMessage,
+    Lesson,
+    LessonStep,
+    GradedTask
 
 )
 from users.serializers import UserSerializer
@@ -448,3 +451,36 @@ class ConvoMessageSerializer(serializers.ModelSerializer):
     def get_avatar(self, obj):
         data = UserProfileSerializer(obj.user).data
         return data.get("avatar")
+
+
+class LessonStepSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LessonStep
+        fields = ("__all__")
+
+
+class LessonSerializer(serializers.ModelSerializer):
+    steps = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Lesson
+        fields = ("__all__")
+
+    def get_steps(self, obj):
+        serializer_data = LessonStepSerializer(
+            obj.lesson_title, many=True
+        ).data
+        return serializer_data
+
+class GradedTaskSerializer(serializers.ModelSerializer):
+    student_name = serializers.SerializerMethodField()
+    # task_name = serializers.SerializerMethodField()
+    class Meta:
+        model = GradedTask
+        fields = ("__all__")
+    def get_student_name(self, obj):
+        data = UserProfileSerializer(obj.student).data
+        return data.get('full_name')
+    # def get_task_name(self, obj):
+    #     data = TaskSerializer(obj.task).data
+    #     return data.get("name")

@@ -215,3 +215,29 @@ class ConvoMessage(models.Model):
 
     def __str__(self):
         return f'{self.user} to {self.convo} on {self.timestamp}'
+
+class Lesson(models.Model):
+    name = models.CharField(max_length=250)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.name
+
+class LessonStep(models.Model):
+    lesson_content = models.TextField(null=True)
+    Lesson_name = models.CharField(max_length=255, null=True)
+    lesson_number = models.IntegerField(null=True)
+    lesson_title = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name="lesson_title")
+    image1 = models.ImageField(null=True, upload_to="lessons")
+    
+
+    def __str__(self):
+        return self.lesson_name
+
+class GradedTask(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    grade = models.FloatField()
+    # task = models.ForeignKey(Task, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.student.last_name}\'s grade for tasks: {self.grade}'
